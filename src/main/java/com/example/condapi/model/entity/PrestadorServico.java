@@ -1,6 +1,6 @@
 package com.example.condapi.model.entity;
 
-public class PrestadorServico {
+public class PrestadorServico extends Funcionario {
 
     private String nome;
     private String cpf;
