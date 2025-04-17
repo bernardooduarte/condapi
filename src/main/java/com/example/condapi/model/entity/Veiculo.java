@@ -8,4 +8,5 @@ public class Veiculo {
     private String cor;
     private String tipoVeiculo;
     private Unidade unidade;
+    private Morador morador;
 }
