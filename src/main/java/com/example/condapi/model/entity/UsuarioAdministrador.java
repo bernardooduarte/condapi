@@ -4,7 +4,7 @@ public class UsuarioAdministrador {
 
     private String nomeEmpresa;
     private String cnpj;
-    private String nomeResponsavelComercial;;
+    private String nomeResponsavelComercial;
     private String telefoneComercial;
     private String email;
     private String logradouro;
