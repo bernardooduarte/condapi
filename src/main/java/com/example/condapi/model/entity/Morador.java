@@ -4,8 +4,7 @@ public class Morador {
 
     private String nome;
     private String cpf;
-    private Condominio idCondominio;
-    private Unidade idUnidade;
+    private Unidade unidade;
     private String celularPessoal;
     private String celularComercial;
     private String email;

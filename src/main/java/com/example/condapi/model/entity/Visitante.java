@@ -4,4 +4,5 @@ public class Visitante {
 
     private String nome;
     private String placa;
+    private Condominio condominio;
 }

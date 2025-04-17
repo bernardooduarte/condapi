@@ -6,7 +6,6 @@ public class Funcionario {
     private String cpf;
     private Condominio idCondominio;
     private String empresa;
-    private String celularPessoal;
     private String celularComercial;
     private String email;
 }

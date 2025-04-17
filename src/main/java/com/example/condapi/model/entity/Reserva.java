@@ -6,4 +6,6 @@ public class Reserva {
     private String horaFim;
     private String data;
     private PrestadorServico prestadorServico;
+    private Unidade unidade;
+    private Morador morador;
 }

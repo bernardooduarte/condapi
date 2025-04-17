@@ -8,4 +8,5 @@ public class AreaComum {
     private String horarioUtilizacaoInicio;
     private String horarioUtilizacaoFim;
     private String restricoes;
+    private Condominio condominio;
 }
