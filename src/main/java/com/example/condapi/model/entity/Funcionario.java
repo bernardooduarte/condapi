@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Data
@@ -22,7 +19,8 @@ public abstract class Funcionario {
 
     private String nome;
     private String cpf;
-    private Condominio idCondominio;
+    @ManyToOne
+    private Condominio condominio;
     private String empresa;
     private String celularComercial;
     private String email;

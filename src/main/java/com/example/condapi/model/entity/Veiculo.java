@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -25,6 +22,8 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private String tipoVeiculo;
+    @ManyToOne
     private Unidade unidade;
+    @ManyToOne
     private Morador morador;
 }

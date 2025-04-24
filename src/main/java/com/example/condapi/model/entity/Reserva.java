@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Data
@@ -24,6 +21,8 @@ public abstract class Reserva {
     private String horaFim;
     private String data;
     private PrestadorServico prestadorServico;
+    @ManyToOne
     private Unidade unidade;
+    @ManyToOne
     private Morador morador;
 }

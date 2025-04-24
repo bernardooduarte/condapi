@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -25,5 +22,6 @@ public class AreaComum {
     private String horarioUtilizacaoInicio;
     private String horarioUtilizacaoFim;
     private String restricoes;
+    @ManyToOne
     private Condominio condominio;
 }
