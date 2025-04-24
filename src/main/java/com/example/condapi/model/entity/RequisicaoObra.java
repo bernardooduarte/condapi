@@ -17,7 +17,6 @@ public class RequisicaoObra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
     private Obra obra;
     private String data;
     private PrestadorServico prestadorServico;

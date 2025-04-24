@@ -20,6 +20,5 @@ public class PrestadorServico extends Funcionario {
     private Long id;
     @ManyToOne
     private Unidade unidade;
-    @ManyToOne
     private Obra obra;
 }
