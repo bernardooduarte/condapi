@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,10 +15,11 @@ public class Encomenda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Morador destinatario;
+    @ManyToOne
+    private Morador morador;
     private String data;
     private String hora;
+    @ManyToOne
     private Porteiro porteiro;
     @ManyToOne
     private Unidade unidade;

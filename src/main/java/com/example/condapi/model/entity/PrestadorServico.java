@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +18,4 @@ public class PrestadorServico extends Funcionario {
     private Long id;
     @ManyToOne
     private Unidade unidade;
-    private Obra obra;
 }
