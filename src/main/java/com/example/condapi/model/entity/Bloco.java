@@ -16,7 +16,6 @@ public class Bloco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Condominio condominio;
     private String logradouro;

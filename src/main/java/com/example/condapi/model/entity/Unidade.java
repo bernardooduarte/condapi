@@ -17,10 +17,10 @@ public class Unidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int numero;
+    private String numero;
     private String rua;
     private boolean petFriendly;
     @ManyToOne
-    private Bloco bloco;
+    private bloco bloco;
     private int quantidadeVagas;
 }
