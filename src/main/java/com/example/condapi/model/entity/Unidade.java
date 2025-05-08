@@ -21,6 +21,6 @@ public class Unidade {
     private String rua;
     private boolean petFriendly;
     @ManyToOne
-    private bloco bloco;
+    private Bloco bloco;
     private int quantidadeVagas;
 }
