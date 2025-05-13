@@ -1,19 +1,10 @@
 package com.example.condapi.api.dto;
 
-import com.example.condapi.model.entity.Reserva;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.condapi.model.entity.Unidade;
 import org.modelmapper.ModelMapper;
 
-import javax.persistence.MappedSuperclass;
-
-@MappedSuperclass
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class unidadeDTO {
-
+public class UnidadeDTO
+{
     private String numero;
     private String rua;
     private String petFriendly;
