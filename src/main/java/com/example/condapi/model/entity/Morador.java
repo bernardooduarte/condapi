@@ -24,5 +24,5 @@ public class Morador {
     private String celularPessoal;
     private String celularComercial;
     private String email;
-    private boolean statusProprietario;
+    private String statusProprietario;
 }

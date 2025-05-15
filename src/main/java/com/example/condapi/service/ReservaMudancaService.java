@@ -39,13 +39,13 @@ public class ReservaMudancaService {
         repository.delete(reservaMudanca);
     }
         public void validar(ReservaMudanca reservaMudanca){
-        if(reserva.getHoraInicio() == null || reserva.getHoraInicio().trim().equals("")){
+        if(reservaMudanca.getHoraInicio() == null || reservaMudanca.getHoraInicio().trim().equals("")){
             throw new RegraNegocioException("Hora de início inválido");
         }
-        if(reserva.getHoraFim() == null || reserva.getHoraFim().trim().equals("")){
+        if(reservaMudanca.getHoraFim() == null || reservaMudanca.getHoraFim().trim().equals("")){
             throw new RegraNegocioException("Hora de fim inválido");
         }
-        if(reserva.getData() == null || reserva.getData().trim().equals("")){
+        if(reservaMudanca.getData() == null || reservaMudanca.getData().trim().equals("")){
             throw new RegraNegocioException("Data inválida");
         }
     }
