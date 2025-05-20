@@ -19,9 +19,10 @@ public abstract class Funcionario {
 
     private String nome;
     private String cpf;
-    @ManyToOne
-    private Condominio condominio;
     private String empresa;
     private String celularComercial;
     private String email;
+
+    @ManyToOne
+    private Condominio condominio;
 }
