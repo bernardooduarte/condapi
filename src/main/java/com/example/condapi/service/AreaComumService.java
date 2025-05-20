@@ -45,7 +45,7 @@ public class AreaComumService {
         if(areaComum.getDescricao() == null || areaComum.getDescricao().trim().equals("")){
             throw new RegraNegocioException("Descrição inválida");
         }
-        if(areaComum.getCapacidadeMax() == null || areaComum.getCapacidadeMax() == ("0"){
+        if(areaComum.getCapacidadeMax() == null || areaComum.getCapacidadeMax() == (0)){
             throw new RegraNegocioException("Capacidade Max inválida");
         }
         if(areaComum.getHorarioUtilizacaoInicio() == null || areaComum.getHorarioUtilizacaoInicio().trim().equals("")){
