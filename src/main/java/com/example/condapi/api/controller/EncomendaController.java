@@ -33,10 +33,18 @@ public class EncomendaController {
         }
         if (dto.getIdUnidade() != null) {
             Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
-            if (!morador.isPresent()) {
-                encomenda.setMorador(null);
+            if (!unidade.isPresent()) {
+                encomenda.setUnidade(null);
             } else {
-                encomenda.setMorador(morador.get());
+                encomenda.setUnidade(unidade.get());
+            }
+        }
+        if (dto.getIdPorteiro() != null) {
+            Optional<Porteiro> porteiro = porteiroService.getPorteiroById(dto.getIdPorteiro());
+            if (!porteiro.isPresent()) {
+                encomenda.setPorteiro(null);
+            } else {
+                encomenda.setPorteiro(porteiro.get());
             }
         }
         return encomenda;
