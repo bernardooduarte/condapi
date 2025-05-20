@@ -28,8 +28,8 @@ public class EncomendaService {
 
     @Transactional
     public Encomenda salvar(Encomenda encomenda){
-        validar(funcionario);
-        return repository.save(funcionario);
+        validar(encomenda);
+        return repository.save(encomenda);
     }
 
     @Transactional

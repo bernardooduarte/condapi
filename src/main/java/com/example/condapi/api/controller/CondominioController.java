@@ -1,0 +1,26 @@
+package com.example.condapi.api.controller;
+
+import com.example.condapi.api.dto.AreaComumDTO;
+import com.example.condapi.api.dto.CondominioDTO;
+import com.example.condapi.model.entity.AreaComum;
+import com.example.condapi.model.entity.Condominio;
+import com.example.condapi.service.AreaComumService;
+import com.example.condapi.service.CondominioService;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
+
+@RestController
+@RequiredArgsConstructor
+public class CondominioController {
+
+    private final CondominioService service;
+
+    public Condominio converter(CondominioDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Condominio condominio = modelMapper.map(dto, Condominio.class);
+        return condominio;
+    }
+}
