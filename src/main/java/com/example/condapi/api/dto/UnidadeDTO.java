@@ -8,7 +8,7 @@ public class UnidadeDTO
     private String numero;
     private String rua;
     private String petFriendly;
-    private int quantidadeVagas;
+    private Integer quantidadeVagas;
     private Long idBloco;
     private String nomeBloco;
 

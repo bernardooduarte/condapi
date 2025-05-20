@@ -25,7 +25,7 @@ public class UsuarioAdministrador {
     private String nomeResponsavelComercial;
     private String telefoneComercial;
     private String logradouro;
-    private int numero;
+    private Integer numero;
     private String complemento;
     private String bairro;
     private String uf;

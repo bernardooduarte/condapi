@@ -18,7 +18,7 @@ public class AreaComum {
 
     private String nome;
     private String descricao;
-    private int capacidadeMax;
+    private Integer capacidadeMax;
     private String horarioUtilizacaoInicio;
     private String horarioUtilizacaoFim;
     private String restricoes;
