@@ -1,6 +1,6 @@
 package com.example.condapi.service;
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.Funcionario;
+import com.example.condapi.model.entity.Bloco;
 import com.example.condapi.model.repository.BlocoRepository;
 import org.springframework.stereotype.Service;
 
