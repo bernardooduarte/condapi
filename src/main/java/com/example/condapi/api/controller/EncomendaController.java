@@ -2,10 +2,7 @@ package com.example.condapi.api.controller;
 
 import com.example.condapi.api.dto.BlocoDTO;
 import com.example.condapi.api.dto.EncomendaDTO;
-import com.example.condapi.model.entity.Bloco;
-import com.example.condapi.model.entity.Condominio;
-import com.example.condapi.model.entity.Encomenda;
-import com.example.condapi.model.entity.Morador;
+import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -34,6 +31,14 @@ public class EncomendaController {
                 encomenda.setMorador(morador.get());
             }
         }
-        return morador;
+        if (dto.getIdUnidade() != null) {
+            Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
+            if (!morador.isPresent()) {
+                encomenda.setMorador(null);
+            } else {
+                encomenda.setMorador(morador.get());
+            }
+        }
+        return encomenda;
     }
 }
