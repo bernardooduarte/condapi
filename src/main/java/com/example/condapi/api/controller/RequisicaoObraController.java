@@ -8,9 +8,18 @@ import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.RequisicaoObraService;
 import com.example.condapi.service.MoradorService;
 import com.example.condapi.service.UnidadeService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
+
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin
+@RequestMapping("/api/v1/requisicoesObras")
 
 public class RequisicaoObraController {
     private final RequisicaoObraService service;

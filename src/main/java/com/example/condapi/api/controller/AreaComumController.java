@@ -7,17 +7,18 @@ import com.example.condapi.service.AreaComumService;
 import com.example.condapi.service.CondominioService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
+@RequestMapping("/api/v1/areasComuns")
 
 public class AreaComumController {
-
-
-
 
     private final AreaComumService service;
     private final CondominioService condominioService;
