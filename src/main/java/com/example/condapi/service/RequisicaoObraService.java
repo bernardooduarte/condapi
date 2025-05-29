@@ -45,4 +45,8 @@ public class RequisicaoObraService {
             throw new RegraNegocioException("Status inválido");
         }
     }
+
+    public List<RequisicaoObra> getRequisicoesObra() {
+        return repository.findAll();
+    }
 }

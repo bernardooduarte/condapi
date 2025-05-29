@@ -18,4 +18,7 @@ public class UnidadeDTO
         dto.nomeBloco = unidade.getBloco().getNome();
         return dto;
     }
+
+    public Long getIdBloco() {
+    }
 }

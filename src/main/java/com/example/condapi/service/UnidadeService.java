@@ -54,4 +54,8 @@ public class UnidadeService {
             throw new RegraNegocioException("Quantidade de vagas inválida");
         }
     }
+
+    public List<Unidade> getUnidades() {
+        return repository.findAll();
+    }
 }

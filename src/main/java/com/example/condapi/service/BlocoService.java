@@ -1,10 +1,6 @@
 package com.example.condapi.service;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Bloco;
-<<<<<<< HEAD
-=======
-import com.example.condapi.model.entity.Bloco;
->>>>>>> 6986545b7bf1f147597964afc1261ccddcb85997
 import com.example.condapi.model.repository.BlocoRepository;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +45,9 @@ public class BlocoService {
         if(bloco.getNome() == null || bloco.getNome().trim().equals("")){
             throw new RegraNegocioException("Nome inválido");
         }
+    }
+
+    public List<Bloco> getBlocos() {
+        return repository.findAll();
     }
 }

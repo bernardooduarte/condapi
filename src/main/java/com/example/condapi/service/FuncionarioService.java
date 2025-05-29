@@ -55,4 +55,8 @@ public class FuncionarioService {
             throw new RegraNegocioException("Email inválido");
         }
     }
+
+    public List<Funcionario> getFuncionarios() {
+        return repository.findAll();
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Obra;
 import com.example.condapi.model.repository.ObraRepository;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,9 @@ public class ObraService {
         if(obra.getDataFim() == null || obra.getDataFim().trim().equals("")){
             throw new RegraNegocioException("Data de fim inválida");
         }
+    }
+
+    public List<Obra> getObras() {
+        return repository.findAll();
     }
 }

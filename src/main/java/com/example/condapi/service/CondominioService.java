@@ -81,4 +81,8 @@ public class CondominioService {
             throw new RegraNegocioException("CEP inválido");
         }
     }
+
+    public List<Condominio> getCondominios() {
+        return repository.findAll();
+    }
 }

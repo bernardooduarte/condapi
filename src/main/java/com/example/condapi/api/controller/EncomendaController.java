@@ -6,11 +6,15 @@ import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +28,12 @@ public class EncomendaController {
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
     private final PorteiroService porteiroService;
+
+    @GetMapping()
+    public ResponseEntity get() {
+        List<Encomenda> encomendas = service.getEncomendas();
+        return ResponseEntity.ok(encomendas.stream().map(EncomendaDTO::create).collect(Collectors.toList()));
+    }
 
     public Encomenda converter(EncomendaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

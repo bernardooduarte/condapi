@@ -59,4 +59,8 @@ public class AreaComumService {
         }
 
     }
+
+    public List<AreaComum> getAreasComuns() {
+        return repository.findAll();
+    }
 }

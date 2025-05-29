@@ -49,4 +49,8 @@ public class ReservaService {
             throw new RegraNegocioException("Data inválida");
         }
     }
+
+    public List<Reserva> getReservas() {
+        return repository.findAll();
+    }
 }

@@ -40,4 +40,8 @@ public class PrestadorServicoService {
     public void validar(PrestadorServico prestadorServico){
 
     }
+
+    public List<PrestadorServico> getPrestadoresServico() {
+        return repository.findAll();
+    }
 }

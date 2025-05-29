@@ -55,4 +55,7 @@ public class VeiculoService {
             throw new RegraNegocioException("Tipo de veículo inválido");
         }
     }
+
+    public List<Veiculo> getVeiculos() {
+    }
 }

@@ -46,4 +46,8 @@ public class EncomendaService {
             throw new RegraNegocioException("Hora inválida");
         }
     }
+
+    public List<Encomenda> getEncomendas() {
+        return repository.findAll();
+    }
 }

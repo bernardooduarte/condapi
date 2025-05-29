@@ -38,9 +38,13 @@ public class PorteiroService {
         repository.delete(porteiro);
     }
 
-    public void validar(Porteiro Porteiro){
+    public void validar(Porteiro porteiro){
         if(porteiro.getNome() == null || porteiro.getNome().trim().equals("")){
             throw new RegraNegocioException("Nome inválido");
         }
+    }
+
+    public List<Porteiro> getPorteiros() {
+        return repository.findAll();
     }
 }

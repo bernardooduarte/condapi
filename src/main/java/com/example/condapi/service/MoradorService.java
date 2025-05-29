@@ -57,4 +57,8 @@ public class MoradorService {
             throw new RegraNegocioException("E-mail inválido");
         }
     }
+
+    public List<Morador> getMoradores() {
+        return repository.findAll();
+    }
 }
