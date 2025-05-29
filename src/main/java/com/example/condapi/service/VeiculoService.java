@@ -1,6 +1,7 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.model.entity.Veiculo;
 import com.example.condapi.model.repository.VeiculoRepository;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class VeiculoService {
             throw new RegraNegocioException("Tipo de veículo inválido");
         }
     }
-
     public List<Veiculo> getVeiculos() {
+        return repository.findAll();
     }
 }

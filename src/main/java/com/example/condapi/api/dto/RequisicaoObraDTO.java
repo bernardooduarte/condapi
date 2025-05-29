@@ -2,8 +2,14 @@ package com.example.condapi.api.dto;
 
 import com.example.condapi.model.entity.PrestadorServico;
 import com.example.condapi.model.entity.RequisicaoObra;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RequisicaoObraDTO {
     private Long id;
     private String data;
@@ -20,4 +26,5 @@ public class RequisicaoObraDTO {
         dto.nomeMorador = requisicaoObra.getMorador().getNome();
         return dto;
     }
+
 }

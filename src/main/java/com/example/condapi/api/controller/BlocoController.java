@@ -24,12 +24,12 @@ import java.util.stream.Collectors;
 
 public class BlocoController {
 
-    private final BlocoService service;
+    private final BlocoService blocoService;
     private final CondominioService condominioService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Bloco> blocos = service.getBlocos();
+        List<Bloco> blocos = blocoService.getBlocos();
         return ResponseEntity.ok(blocos.stream().map(BlocoDTO::create).collect(Collectors.toList()));
     }
 

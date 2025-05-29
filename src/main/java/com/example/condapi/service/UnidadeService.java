@@ -50,7 +50,7 @@ public class UnidadeService {
         if(unidade.getPetFriendly() == null || unidade.getPetFriendly().trim().equals("")){
             throw new RegraNegocioException("Condição de Pet Friendly inválido");
         }
-        if(unidade.getQuantidadeVagas() == null || unidade.getQuantidadeVagas() == 0){
+        if(unidade.getQuantidadeVagas() == null || unidade.getQuantidadeVagas().trim().equals("")){
             throw new RegraNegocioException("Quantidade de vagas inválida");
         }
     }

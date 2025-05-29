@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/reservas")
 
 public class ReservaController {
-    private final ReservaService service;
+    private final ReservaService reservaService;
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Reserva> reservas = service.getReservas();
+        List<Reserva> reservas = reservaService.getReservas();
         return ResponseEntity.ok(reservas.stream().map(ReservaDTO::create).collect(Collectors.toList()));
     }
 
@@ -54,7 +54,7 @@ public class ReservaController {
             if (!unidade.isPresent()) {
                 reserva.setUnidade(null);
             } else {
-                reserva.setUnidade(Unidade.get());
+                reserva.setUnidade(unidade.get());
             }
         }
         return reserva;

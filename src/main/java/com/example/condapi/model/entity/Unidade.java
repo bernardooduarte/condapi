@@ -22,5 +22,5 @@ public class Unidade {
     private String petFriendly;
     @ManyToOne
     private Bloco bloco;
-    private int quantidadeVagas;
+    private String quantidadeVagas;
 }

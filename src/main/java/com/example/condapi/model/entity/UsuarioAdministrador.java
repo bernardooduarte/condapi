@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class UsuarioAdministrador {
+public class UsuarioAdministrador extends Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

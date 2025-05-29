@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/requisicoesObras")
 
 public class RequisicaoObraController {
-    private final RequisicaoObraService service;
+    private final RequisicaoObraService requisicaoObraService;
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<RequisicaoObra> requisicoesObra = service.getRequisicoesObra();
+        List<RequisicaoObra> requisicoesObra = requisicaoObraService.getRequisicoesObra();
         return ResponseEntity.ok(requisicoesObra.stream().map(RequisicaoObraDTO::create).collect(Collectors.toList()));
     }
 
@@ -53,7 +53,7 @@ public class RequisicaoObraController {
             if (!unidade.isPresent()) {
                 requisicaoObra.setUnidade(null);
             } else {
-                requisicaoObra.setUnidade(Unidade.get());
+                requisicaoObra.setUnidade(unidade.get());
             }
         }
         return requisicaoObra;
