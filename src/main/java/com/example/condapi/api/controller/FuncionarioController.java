@@ -19,10 +19,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/funcionarios")
 
 public class FuncionarioController {
-    private final FuncionarioService funcionarioService;
+    private final FuncionarioService service;
+
+
     @GetMapping()
     public ResponseEntity get() {
-        List<Funcionario> funcionarios = funcionarioService.getFuncionarios();
+        List<Funcionario> funcionarios = service.getFuncionarios();
         return ResponseEntity.ok(funcionarios.stream().map(FuncionarioDTO::create).collect(Collectors.toList()));
     }
 }

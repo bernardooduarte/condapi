@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 
 public class PrestadorServicoController {
 
-    private final PrestadorServicoService prestadorServicoService;
+    private final PrestadorServicoService service;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<PrestadorServico> prestadoresServico = prestadorServicoService.getPrestadoresServico();
+        List<PrestadorServico> prestadoresServico = service.getPrestadoresServico();
         return ResponseEntity.ok(prestadoresServico.stream().map(PrestadorServicoDTO::create).collect(Collectors.toList()));
     }
 

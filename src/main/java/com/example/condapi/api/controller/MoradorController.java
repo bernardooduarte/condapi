@@ -25,12 +25,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/moradores")
 
 public class MoradorController {
-    private final MoradorService moradorService;
+    private final MoradorService service;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Morador> moradores = moradorService.getMoradores();
+        List<Morador> moradores = service.getMoradores();
         return ResponseEntity.ok(moradores.stream().map(MoradorDTO::create).collect(Collectors.toList()));
     }
 

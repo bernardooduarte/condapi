@@ -24,11 +24,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/porteiros")
 
 public class PorteiroController {
-    private final PorteiroService porteiroService;
+    private final PorteiroService service;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Porteiro> porteiros = porteiroService.getPorteiros();
+        List<Porteiro> porteiros = service.getPorteiros();
         return ResponseEntity.ok(porteiros.stream().map(PorteiroDTO::create).collect(Collectors.toList()));
     }
 

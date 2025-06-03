@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 
 public class ObraController {
 
-    private final ObraService obraService;
+    private final ObraService service;
     private final PrestadorServicoService prestadorServicoService;
     private final RequisicaoObraService requisicaoObraService;
 
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Obra> obras = obraService.getObras();
+        List<Obra> obras = service.getObras();
         return ResponseEntity.ok(obras.stream().map(ObraDTO::create).collect(Collectors.toList()));
     }
 

@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/reservas")
 
 public class ReservaController {
-    private final ReservaService reservaService;
+    private final ReservaService service;
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Reserva> reservas = reservaService.getReservas();
+        List<Reserva> reservas = service.getReservas();
         return ResponseEntity.ok(reservas.stream().map(ReservaDTO::create).collect(Collectors.toList()));
     }
 

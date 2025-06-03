@@ -25,12 +25,12 @@ import java.util.stream.Collectors;
 
 public class UnidadeController {
 
-    private final UnidadeService unidadeService;
+    private final UnidadeService service;
     private final BlocoService blocoService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Unidade> unidades = unidadeService.getUnidades();
+        List<Unidade> unidades = service.getUnidades();
         return ResponseEntity.ok(unidades.stream().map(UnidadeDTO::create).collect(Collectors.toList()));
     }
 

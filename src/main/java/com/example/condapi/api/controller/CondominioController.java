@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class CondominioController {
 
-    private final CondominioService condominioService;
+    private final CondominioService service;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Condominio> condominios = condominioService.getCondominios();
+        List<Condominio> condominios = service.getCondominios();
         return ResponseEntity.ok(condominios.stream().map(CondominioDTO::create).collect(Collectors.toList()));
     }
 

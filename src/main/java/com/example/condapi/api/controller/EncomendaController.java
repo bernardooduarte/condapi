@@ -24,14 +24,14 @@ import java.util.stream.Collectors;
 public class EncomendaController {
 
 
-    private final EncomendaService encomendaService;
+    private final EncomendaService service;
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
     private final PorteiroService porteiroService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Encomenda> encomendas = encomendaService.getEncomendas();
+        List<Encomenda> encomendas = service.getEncomendas();
         return ResponseEntity.ok(encomendas.stream().map(EncomendaDTO::create).collect(Collectors.toList()));
     }
 

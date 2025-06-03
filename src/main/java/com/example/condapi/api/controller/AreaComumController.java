@@ -24,12 +24,12 @@ import java.util.stream.Collectors;
 
 public class AreaComumController {
 
-    private final AreaComumService areaComumService;
+    private final AreaComumService service;
     private final CondominioService condominioService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<AreaComum> areasComuns = areaComumService.getAreasComuns();
+        List<AreaComum> areasComuns = service.getAreasComuns();
         return ResponseEntity.ok(areasComuns.stream().map(AreaComumDTO::create).collect(Collectors.toList()));
     }
 

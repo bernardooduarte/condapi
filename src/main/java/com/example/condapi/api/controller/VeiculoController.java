@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
 
 
 public class VeiculoController {
-    private final VeiculoService veiculoService;
+    private final VeiculoService service;
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<Veiculo> veiculos = veiculoService.getVeiculos();
+        List<Veiculo> veiculos = service.getVeiculos();
         return ResponseEntity.ok(veiculos.stream().map(VeiculoDTO::create).collect(Collectors.toList()));
     }
 

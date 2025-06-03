@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/requisicoesObras")
 
 public class RequisicaoObraController {
-    private final RequisicaoObraService requisicaoObraService;
+    private final RequisicaoObraService service;
     private final MoradorService moradorService;
     private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
-        List<RequisicaoObra> requisicoesObra = requisicaoObraService.getRequisicoesObra();
+        List<RequisicaoObra> requisicoesObra = service.getRequisicoesObra();
         return ResponseEntity.ok(requisicoesObra.stream().map(RequisicaoObraDTO::create).collect(Collectors.toList()));
     }
 
