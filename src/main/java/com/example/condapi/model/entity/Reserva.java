@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
