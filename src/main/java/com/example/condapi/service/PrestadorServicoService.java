@@ -14,7 +14,7 @@ public class PrestadorServicoService {
 
     public PrestadorServicoRepository repository;
 
-    public void PrestadorServicoService (PrestadorServicoRepository repository){
+    public PrestadorServicoService (PrestadorServicoRepository repository){
         this.repository = repository;
     }
 
