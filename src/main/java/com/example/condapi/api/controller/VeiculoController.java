@@ -11,11 +11,9 @@ import com.example.condapi.service.UnidadeService;
 import com.example.condapi.service.VeiculoService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +34,15 @@ public class VeiculoController {
     public ResponseEntity get() {
         List<Veiculo> veiculos = service.getVeiculos();
         return ResponseEntity.ok(veiculos.stream().map(VeiculoDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id") Long id) {
+        Optional<Veiculo> veiculo = service.getVeiculoById(id);
+        if (!veiculo.isPresent()) {
+            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(veiculo.map(VeiculoDTO::create));
     }
 
     public Veiculo converter(VeiculoDTO dto) {

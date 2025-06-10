@@ -2,15 +2,14 @@ package com.example.condapi.api.controller;
 
 import com.example.condapi.api.dto.MoradorDTO;
 import com.example.condapi.api.dto.ObraDTO;
+import com.example.condapi.api.dto.UnidadeDTO;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,15 @@ public class ObraController {
     public ResponseEntity get() {
         List<Obra> obras = service.getObras();
         return ResponseEntity.ok(obras.stream().map(ObraDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id") Long id) {
+        Optional<Obra> obra = service.getObraById(id);
+        if (!obra.isPresent()) {
+            return new ResponseEntity("Obra não encontrado", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(obra.map(ObraDTO::create));
     }
 
     public Obra converter(ObraDTO dto) {
