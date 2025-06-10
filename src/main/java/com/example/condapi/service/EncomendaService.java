@@ -2,7 +2,6 @@ package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Encomenda;
-import com.example.condapi.model.entity.Funcionario;
 import com.example.condapi.model.repository.EncomendaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +14,14 @@ import java.util.Optional;
 public class EncomendaService {
     public EncomendaRepository repository;
 
-    public EncomendaService(EncomendaRepository repositor){  this.repository = repository;}
+    public EncomendaService(EncomendaRepository repository){  this.repository = repository;}
 
     public List<Encomenda> getEncomendaRepository(){
         return repository.findAll();
     }
 
     public Optional<Encomenda> getEncomendaById(Long id){
+
         return repository.findById(id);
     }
 

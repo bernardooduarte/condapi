@@ -11,9 +11,10 @@ import java.util.Optional;
 
 @Service
 public class PrestadorServicoService {
+
     public PrestadorServicoRepository repository;
 
-    public void PrestadorServicoRepository(PrestadorServicoRepository repository){
+    public void PrestadorServicoService (PrestadorServicoRepository repository){
         this.repository = repository;
     }
 
