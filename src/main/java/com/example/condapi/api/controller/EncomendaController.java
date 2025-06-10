@@ -6,11 +6,9 @@ import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +31,15 @@ public class EncomendaController {
     public ResponseEntity get() {
         List<Encomenda> encomendas = service.getEncomendas();
         return ResponseEntity.ok(encomendas.stream().map(EncomendaDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id") Long id) {
+        Optional<Encomenda> encomenda = service.getEncomendaById(id);
+        if (!encomenda.isPresent()) {
+            return new ResponseEntity("Encomenda não encontrada", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(encomenda.map(EncomendaDTO::create));
     }
 
     public Encomenda converter(EncomendaDTO dto) {

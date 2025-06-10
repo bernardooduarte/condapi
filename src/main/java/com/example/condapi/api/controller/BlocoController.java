@@ -7,11 +7,9 @@ import com.example.condapi.service.BlocoService;
 import com.example.condapi.service.CondominioService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +29,15 @@ public class BlocoController {
     public ResponseEntity get() {
         List<Bloco> blocos = service.getBlocos();
         return ResponseEntity.ok(blocos.stream().map(BlocoDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id") Long id) {
+        Optional<Bloco> bloco = service.getBlocoById(id);
+        if (!bloco.isPresent()) {
+            return new ResponseEntity("Bloco não encontrado", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(bloco.map(BlocoDTO::create));
     }
 
 

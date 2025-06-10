@@ -6,11 +6,9 @@ import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.CondominioService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +26,15 @@ public class CondominioController {
     public ResponseEntity get() {
         List<Condominio> condominios = service.getCondominios();
         return ResponseEntity.ok(condominios.stream().map(CondominioDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity get(@PathVariable("id") Long id) {
+        Optional<Condominio> condominio = service.getCondominioById(id);
+        if (!condominio.isPresent()) {
+            return new ResponseEntity("Condomínio não encontrado", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(condominio.map(CondominioDTO::create));
     }
 
     public Condominio converter(CondominioDTO dto) {
