@@ -1,8 +1,8 @@
 package com.example.condapi.api.controller;
 
 
-import com.example.condapi.api.dto.MoradorDTO;
 import com.example.condapi.api.dto.VeiculoDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.model.entity.Veiculo;
@@ -43,6 +43,17 @@ public class VeiculoController {
             return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(veiculo.map(VeiculoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody VeiculoDTO dto) {
+        try {
+            Veiculo veiculo = converter(dto);
+            veiculo = service.salvar(veiculo);
+            return new ResponseEntity(veiculo, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Veiculo converter(VeiculoDTO dto) {

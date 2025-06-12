@@ -1,6 +1,8 @@
 package com.example.condapi.api.controller;
 
+
 import com.example.condapi.api.dto.BlocoDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Bloco;
 import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.BlocoService;
@@ -38,6 +40,17 @@ public class BlocoController {
             return new ResponseEntity("Bloco não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(bloco.map(BlocoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody BlocoDTO dto) {
+        try {
+            Bloco bloco = converter(dto);
+            bloco = service.salvar(bloco);
+            return new ResponseEntity(bloco, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 

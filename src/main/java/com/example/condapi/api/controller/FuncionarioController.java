@@ -1,6 +1,8 @@
 package com.example.condapi.api.controller;
 
+
 import com.example.condapi.api.dto.FuncionarioDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Funcionario;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +36,16 @@ public class FuncionarioController {
             return new ResponseEntity("Funcionário não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(funcionario.map(FuncionarioDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody FuncionarioDTO dto) {
+        try {
+            Funcionario funcionario = converter(dto);
+            funcionario = service.salvar(funcionario);
+            return new ResponseEntity(funcionario, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

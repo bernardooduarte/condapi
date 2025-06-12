@@ -1,9 +1,9 @@
 package com.example.condapi.api.controller;
 
-import com.example.condapi.api.dto.MoradorDTO;
+
 import com.example.condapi.api.dto.UnidadeDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Bloco;
-import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +41,16 @@ public class UnidadeController {
         return ResponseEntity.ok(unidade.map(UnidadeDTO::create));
     }
 
+    @PostMapping()
+    public ResponseEntity post(@RequestBody UnidadeDTO dto) {
+        try {
+            Unidade unidade = converter(dto);
+            unidade = service.salvar(unidade);
+            return new ResponseEntity(unidade, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     public Unidade converter(UnidadeDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

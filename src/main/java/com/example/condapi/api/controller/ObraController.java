@@ -1,8 +1,8 @@
 package com.example.condapi.api.controller;
 
-import com.example.condapi.api.dto.MoradorDTO;
+
 import com.example.condapi.api.dto.ObraDTO;
-import com.example.condapi.api.dto.UnidadeDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,17 @@ public class ObraController {
             return new ResponseEntity("Obra não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(obra.map(ObraDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ObraDTO dto) {
+        try {
+            Obra obra = converter(dto);
+            obra = service.salvar(obra);
+            return new ResponseEntity(obra, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Obra converter(ObraDTO dto) {

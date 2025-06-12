@@ -1,9 +1,8 @@
 package com.example.condapi.api.controller;
 
 
-import com.example.condapi.api.dto.MoradorDTO;
 import com.example.condapi.api.dto.RequisicaoObraDTO;
-import com.example.condapi.api.dto.UnidadeDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.RequisicaoObra;
 import com.example.condapi.model.entity.Unidade;
@@ -43,6 +42,17 @@ public class RequisicaoObraController {
             return new ResponseEntity("Requisicao não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(requisicaoObra.map(RequisicaoObraDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody RequisicaoObraDTO dto) {
+        try {
+            RequisicaoObra requisicaoObra = converter(dto);
+            requisicaoObra = service.salvar(requisicaoObra);
+            return new ResponseEntity(requisicaoObra, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public RequisicaoObra converter(RequisicaoObraDTO dto) {

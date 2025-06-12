@@ -2,6 +2,7 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.EncomendaDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,17 @@ public class EncomendaController {
             return new ResponseEntity("Encomenda não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(encomenda.map(EncomendaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody EncomendaDTO dto) {
+        try {
+            Encomenda encomenda = converter(dto);
+            encomenda = service.salvar(encomenda);
+            return new ResponseEntity(encomenda, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Encomenda converter(EncomendaDTO dto) {

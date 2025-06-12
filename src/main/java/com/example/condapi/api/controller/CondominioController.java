@@ -2,6 +2,7 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.CondominioDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.CondominioService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,17 @@ public class CondominioController {
             return new ResponseEntity("Condomínio não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(condominio.map(CondominioDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody CondominioDTO dto) {
+        try {
+            Condominio condominio = converter(dto);
+            condominio = service.salvar(condominio);
+            return new ResponseEntity(condominio, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Condominio converter(CondominioDTO dto) {

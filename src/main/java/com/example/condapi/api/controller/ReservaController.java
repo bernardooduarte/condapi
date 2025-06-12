@@ -1,10 +1,8 @@
 package com.example.condapi.api.controller;
 
 
-
-import com.example.condapi.api.dto.MoradorDTO;
 import com.example.condapi.api.dto.ReservaDTO;
-import com.example.condapi.api.dto.UnidadeDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Reserva;
 import com.example.condapi.model.entity.Unidade;
@@ -44,6 +42,17 @@ public class ReservaController {
             return new ResponseEntity("reserva não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(reserva.map(ReservaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ReservaDTO dto) {
+        try {
+            Reserva reserva = converter(dto);
+            reserva = service.salvar(reserva);
+            return new ResponseEntity(reserva, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Reserva converter(ReservaDTO dto) {

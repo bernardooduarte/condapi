@@ -1,6 +1,7 @@
 package com.example.condapi.api.controller;
 
 import com.example.condapi.api.dto.AreaComumDTO;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.AreaComum;
 import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.AreaComumService;
@@ -38,6 +39,17 @@ public class AreaComumController {
             return new ResponseEntity("Área Comum não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(areaComum.map(AreaComumDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AreaComumDTO dto) {
+        try {
+            AreaComum areaComum = converter(dto);
+            areaComum = service.salvar(areaComum);
+            return new ResponseEntity(areaComum, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public AreaComum converter(AreaComumDTO dto) {

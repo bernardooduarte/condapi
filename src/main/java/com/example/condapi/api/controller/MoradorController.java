@@ -1,8 +1,7 @@
 package com.example.condapi.api.controller;
 
-import com.example.condapi.api.dto.EncomendaDTO;
 import com.example.condapi.api.dto.MoradorDTO;
-import com.example.condapi.model.entity.Encomenda;
+import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.MoradorService;
@@ -39,6 +38,17 @@ public class MoradorController {
             return new ResponseEntity("Morador não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(morador.map(MoradorDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody MoradorDTO dto) {
+        try {
+            Morador morador = converter(dto);
+            morador = service.salvar(morador);
+            return new ResponseEntity(morador, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Morador converter(MoradorDTO dto) {
