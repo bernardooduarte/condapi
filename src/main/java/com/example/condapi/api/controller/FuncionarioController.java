@@ -1,11 +1,13 @@
 package com.example.condapi.api.controller;
 
 
+import com.example.condapi.api.dto.EncomendaDTO;
 import com.example.condapi.api.dto.FuncionarioDTO;
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.Funcionario;
+import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class FuncionarioController {
     private final FuncionarioService service;
-
+    private final CondominioService condominioService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -47,5 +49,19 @@ public class FuncionarioController {
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    public Funcionario converter(FuncionarioDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Funcionario funcionario = modelMapper.map(dto, Funcionario.class);
+        if (dto.getIdCondominio() != null) {
+            Optional<Condominio> condominio = condominioService.getCondominioById(dto.getIdCondominio());
+            if (!condominio.isPresent()) {
+                funcionario.setCondominio(null);
+            } else {
+                funcionario.setCondominio(condominio.get());
+            }
+        }
+        return funcionario;
     }
 }
