@@ -2,9 +2,11 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.RequisicaoObraDTO;
+import com.example.condapi.api.dto.ReservaDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.RequisicaoObra;
+import com.example.condapi.model.entity.Reserva;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.RequisicaoObraService;
 import com.example.condapi.service.MoradorService;
@@ -50,6 +52,21 @@ public class RequisicaoObraController {
             RequisicaoObra requisicaoObra = converter(dto);
             requisicaoObra = service.salvar(requisicaoObra);
             return new ResponseEntity(requisicaoObra, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody RequisicaoObraDTO dto) {
+        if (!service.getRequisicaoObraById(id).isPresent()) {
+            return new ResponseEntity("Requisição de Obra não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            RequisicaoObra requisicaoObra = converter(dto);
+            requisicaoObra.setId(id);
+            service.salvar(requisicaoObra);
+            return ResponseEntity.ok(requisicaoObra);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

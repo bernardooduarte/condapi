@@ -4,6 +4,7 @@ package com.example.condapi.api.controller;
 import com.example.condapi.api.dto.*;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Porteiro;
+import com.example.condapi.model.entity.PrestadorServico;
 import com.example.condapi.service.PorteiroService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -45,6 +46,21 @@ public class PorteiroController {
             Porteiro porteiro = converter(dto);
             porteiro = service.salvar(porteiro);
             return new ResponseEntity(porteiro, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PorteiroDTO dto) {
+        if (!service.getPorteiroById(id).isPresent()) {
+            return new ResponseEntity("Porteiro não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Porteiro porteiro = converter(dto);
+            porteiro.setId(id);
+            service.salvar(porteiro);
+            return ResponseEntity.ok(porteiro);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

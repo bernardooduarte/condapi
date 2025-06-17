@@ -2,9 +2,11 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.UnidadeDTO;
+import com.example.condapi.api.dto.VeiculoDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Bloco;
 import com.example.condapi.model.entity.Unidade;
+import com.example.condapi.model.entity.Veiculo;
 import com.example.condapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -47,6 +49,21 @@ public class UnidadeController {
             Unidade unidade = converter(dto);
             unidade = service.salvar(unidade);
             return new ResponseEntity(unidade, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UnidadeDTO dto) {
+        if (!service.getUnidadeById(id).isPresent()) {
+            return new ResponseEntity("Unidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Unidade unidade = converter(dto);
+            unidade.setId(id);
+            service.salvar(unidade);
+            return ResponseEntity.ok(unidade);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

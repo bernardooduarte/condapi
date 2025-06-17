@@ -2,8 +2,10 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.PrestadorServicoDTO;
+import com.example.condapi.api.dto.RequisicaoObraDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.PrestadorServico;
+import com.example.condapi.model.entity.RequisicaoObra;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.PrestadorServicoService;
 import com.example.condapi.service.UnidadeService;
@@ -48,6 +50,21 @@ public class PrestadorServicoController {
             PrestadorServico prestadorServico = converter(dto);
             prestadorServico = service.salvar(prestadorServico);
             return new ResponseEntity(prestadorServico, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PrestadorServicoDTO dto) {
+        if (!service.getPrestadorServicoById(id).isPresent()) {
+            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            PrestadorServico prestadorServico = converter(dto);
+            prestadorServico.setId(id);
+            service.salvar(prestadorServico);
+            return ResponseEntity.ok(prestadorServico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
