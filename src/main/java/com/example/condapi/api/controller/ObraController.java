@@ -2,6 +2,7 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.ObraDTO;
+import com.example.condapi.api.dto.PorteiroDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
@@ -48,6 +49,21 @@ public class ObraController {
             Obra obra = converter(dto);
             obra = service.salvar(obra);
             return new ResponseEntity(obra, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ObraDTO dto) {
+        if (!service.getObraById(id).isPresent()) {
+            return new ResponseEntity("Obra não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Obra obra = converter(dto);
+            obra.setId(id);
+            service.salvar(obra);
+            return ResponseEntity.ok(obra);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
