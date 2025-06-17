@@ -53,6 +53,21 @@ public class BlocoController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody BlocoDTO dto) {
+        if (!service.getBlocoById(id).isPresent()) {
+            return new ResponseEntity("Bloco não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Bloco bloco = converter(dto);
+            bloco.setId(id);
+            service.salvar(bloco);
+            return ResponseEntity.ok(bloco);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     public Bloco converter(BlocoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

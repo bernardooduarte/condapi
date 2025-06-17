@@ -54,6 +54,22 @@ public class EncomendaController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EncomendaDTO dto) {
+        if (!service.getEncomendaById(id).isPresent()) {
+            return new ResponseEntity("Encomenda não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Encomenda encomenda = converter(dto);
+            encomenda.setId(id);
+            service.salvar(encomenda);
+            return ResponseEntity.ok(encomenda);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
     public Encomenda converter(EncomendaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Encomenda encomenda = modelMapper.map(dto, Encomenda.class);

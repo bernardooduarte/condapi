@@ -49,6 +49,22 @@ public class CondominioController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CondominioDTO dto) {
+        if (!service.getCondominioById(id).isPresent()) {
+            return new ResponseEntity("Condomínio não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Condominio condominio = converter(dto);
+            condominio.setId(id);
+            service.salvar(condominio);
+            return ResponseEntity.ok(condominio);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
     public Condominio converter(CondominioDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Condominio condominio = modelMapper.map(dto, Condominio.class);
