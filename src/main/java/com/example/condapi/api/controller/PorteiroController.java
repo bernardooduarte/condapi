@@ -51,7 +51,7 @@ public class PorteiroController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PorteiroDTO dto) {
         if (!service.getPorteiroById(id).isPresent()) {
             return new ResponseEntity("Porteiro não encontrado", HttpStatus.NOT_FOUND);

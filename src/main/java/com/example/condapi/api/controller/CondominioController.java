@@ -49,7 +49,7 @@ public class CondominioController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CondominioDTO dto) {
         if (!service.getCondominioById(id).isPresent()) {
             return new ResponseEntity("Condomínio não encontrado", HttpStatus.NOT_FOUND);

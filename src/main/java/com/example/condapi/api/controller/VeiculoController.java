@@ -56,7 +56,7 @@ public class VeiculoController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody VeiculoDTO dto) {
         if (!service.getVeiculoById(id).isPresent()) {
             return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);

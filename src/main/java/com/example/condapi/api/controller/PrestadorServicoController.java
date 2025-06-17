@@ -55,7 +55,7 @@ public class PrestadorServicoController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PrestadorServicoDTO dto) {
         if (!service.getPrestadorServicoById(id).isPresent()) {
             return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);

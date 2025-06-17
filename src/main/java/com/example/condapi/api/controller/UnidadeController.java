@@ -54,7 +54,7 @@ public class UnidadeController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UnidadeDTO dto) {
         if (!service.getUnidadeById(id).isPresent()) {
             return new ResponseEntity("Unidade não encontrada", HttpStatus.NOT_FOUND);

@@ -56,7 +56,7 @@ public class ReservaController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ReservaDTO dto) {
         if (!service.getReservaById(id).isPresent()) {
             return new ResponseEntity("Unidade não encontrada", HttpStatus.NOT_FOUND);

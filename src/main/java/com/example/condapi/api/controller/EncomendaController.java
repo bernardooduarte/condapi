@@ -54,7 +54,7 @@ public class EncomendaController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EncomendaDTO dto) {
         if (!service.getEncomendaById(id).isPresent()) {
             return new ResponseEntity("Encomenda não encontrada", HttpStatus.NOT_FOUND);

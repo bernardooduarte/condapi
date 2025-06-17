@@ -52,7 +52,7 @@ public class AreaComumController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AreaComumDTO dto) {
         if (!service.getAreaComumById(id).isPresent()) {
             return new ResponseEntity("Área comum não encontrado", HttpStatus.NOT_FOUND);

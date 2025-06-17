@@ -57,7 +57,7 @@ public class RequisicaoObraController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody RequisicaoObraDTO dto) {
         if (!service.getRequisicaoObraById(id).isPresent()) {
             return new ResponseEntity("Requisição de Obra não encontrada", HttpStatus.NOT_FOUND);

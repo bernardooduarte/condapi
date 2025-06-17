@@ -53,7 +53,7 @@ public class BlocoController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody BlocoDTO dto) {
         if (!service.getBlocoById(id).isPresent()) {
             return new ResponseEntity("Bloco não encontrado", HttpStatus.NOT_FOUND);

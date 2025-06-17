@@ -51,7 +51,7 @@ public class MoradorController {
         }
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody MoradorDTO dto) {
         if (!service.getMoradorById(id).isPresent()) {
             return new ResponseEntity("Morador não encontrado", HttpStatus.NOT_FOUND);
