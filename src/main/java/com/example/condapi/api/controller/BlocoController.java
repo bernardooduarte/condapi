@@ -68,6 +68,20 @@ public class BlocoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Bloco> bloco = service.getBlocoById(id);
+        if (!bloco.isPresent()) {
+            return new ResponseEntity("Bloco não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(bloco.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     public Bloco converter(BlocoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

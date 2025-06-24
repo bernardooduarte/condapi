@@ -70,6 +70,20 @@ public class PrestadorServicoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<PrestadorServico> prestadorServico = service.getPrestadorServicoById(id);
+        if (!prestadorServico.isPresent()) {
+            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(prestadorServico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public PrestadorServico converter(PrestadorServicoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         PrestadorServico prestadorServico = modelMapper.map(dto, PrestadorServico.class);

@@ -54,7 +54,7 @@ public class MoradorService {
             throw new RegraNegocioException("E-mail inválido");
         }
         if(morador.getStatusProprietario() == null || morador.getStatusProprietario().trim().equals("")){
-            throw new RegraNegocioException("E-mail inválido");
+            throw new RegraNegocioException("Status inválido");
         }
     }
 

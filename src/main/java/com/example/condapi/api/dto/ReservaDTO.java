@@ -23,9 +23,10 @@ public class ReservaDTO {
     private String horaInicio;
     private String horaFim;
     private String data;
-    private PrestadorServico prestadorServico;
+    private Long idPrestadorServico;
     private Long idUnidade;
     private Long idMorador;
+    private String nomePrestadorServico;
     private String nomeMorador;
     private String numeroUnidade;
 
@@ -34,6 +35,7 @@ public class ReservaDTO {
         ReservaDTO dto = modelMapper.map(reserva, ReservaDTO.class);
         dto.numeroUnidade = reserva.getUnidade().getNumero();
         dto.nomeMorador = reserva.getMorador().getNome();
+        dto.nomePrestadorServico = reserva.getPrestadorServico().getNome();
         return dto;
     }
 }

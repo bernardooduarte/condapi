@@ -72,6 +72,21 @@ public class RequisicaoObraController {
         }
     }
 
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<RequisicaoObra> requisicaoObra = service.getRequisicaoObraById(id);
+        if (!requisicaoObra.isPresent()) {
+            return new ResponseEntity("Requisição de obra não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(requisicaoObra.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public RequisicaoObra converter(RequisicaoObraDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         RequisicaoObra requisicaoObra = modelMapper.map(dto, RequisicaoObra.class);

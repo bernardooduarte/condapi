@@ -22,7 +22,7 @@ public class MoradorDTO {
     private String celularPessoal;
     private String celularComercial;
     private String email;
-    private boolean statusProprietario;
+    private String statusProprietario;
     private String numeroUnidade;
 
     public static MoradorDTO create(Morador morador){

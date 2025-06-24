@@ -71,6 +71,20 @@ public class VeiculoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Veiculo> veiculo = service.getVeiculoById(id);
+        if (!veiculo.isPresent()) {
+            return new ResponseEntity("Veículo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(veiculo.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Veiculo converter(VeiculoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Veiculo veiculo = modelMapper.map(dto, Veiculo.class);

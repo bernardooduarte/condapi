@@ -67,6 +67,20 @@ public class AreaComumController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AreaComum> areaComum = service.getAreaComumById(id);
+        if (!areaComum.isPresent()) {
+            return new ResponseEntity("Area comum não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(areaComum.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public AreaComum converter(AreaComumDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         AreaComum areaComum = modelMapper.map(dto, AreaComum.class);

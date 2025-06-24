@@ -66,6 +66,19 @@ public class MoradorController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Morador> morador = service.getMoradorById(id);
+        if (!morador.isPresent()) {
+            return new ResponseEntity("Morador não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(morador.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     public Morador converter(MoradorDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

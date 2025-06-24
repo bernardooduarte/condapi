@@ -64,6 +64,20 @@ public class CondominioController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Condominio> condominio = service.getCondominioById(id);
+        if (!condominio.isPresent()) {
+            return new ResponseEntity("Categoria não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(condominio.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     public Condominio converter(CondominioDTO dto) {
         ModelMapper modelMapper = new ModelMapper();

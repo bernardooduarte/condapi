@@ -66,6 +66,20 @@ public class PorteiroController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Porteiro> porteiro = service.getPorteiroById(id);
+        if (!porteiro.isPresent()) {
+            return new ResponseEntity("Porteiro não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(porteiro.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Porteiro converter(PorteiroDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Porteiro porteiro = modelMapper.map(dto, Porteiro.class);

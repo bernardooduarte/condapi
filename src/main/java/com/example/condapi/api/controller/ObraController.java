@@ -69,6 +69,20 @@ public class ObraController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Obra> obra = service.getObraById(id);
+        if (!obra.isPresent()) {
+            return new ResponseEntity("Obra não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(obra.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Obra converter(ObraDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Obra obra = modelMapper.map(dto, Obra.class);

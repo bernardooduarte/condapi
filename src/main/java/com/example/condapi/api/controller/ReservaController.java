@@ -4,6 +4,7 @@ package com.example.condapi.api.controller;
 import com.example.condapi.api.dto.ReservaDTO;
 import com.example.condapi.api.dto.VeiculoDTO;
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Reserva;
 import com.example.condapi.model.entity.Unidade;
@@ -66,6 +67,20 @@ public class ReservaController {
             reserva.setId(id);
             service.salvar(reserva);
             return ResponseEntity.ok(reserva);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Reserva> reserva = service.getReservaById(id);
+        if (!reserva.isPresent()) {
+            return new ResponseEntity("Reserva não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(reserva.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
