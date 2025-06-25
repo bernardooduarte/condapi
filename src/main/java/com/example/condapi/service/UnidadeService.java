@@ -2,9 +2,7 @@ package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Unidade;
-import com.example.condapi.model.entity.UsuarioAdministrador;
 import com.example.condapi.model.repository.UnidadeRepository;
-import com.example.condapi.model.repository.UsuarioAdministradorRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
