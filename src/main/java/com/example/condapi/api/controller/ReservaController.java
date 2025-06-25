@@ -72,7 +72,7 @@ public class ReservaController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Reserva> reserva = service.getReservaById(id);
         if (!reserva.isPresent()) {

@@ -73,7 +73,7 @@ public class RequisicaoObraController {
     }
 
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<RequisicaoObra> requisicaoObra = service.getRequisicaoObraById(id);
         if (!requisicaoObra.isPresent()) {

@@ -66,7 +66,7 @@ public class PorteiroController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Porteiro> porteiro = service.getPorteiroById(id);
         if (!porteiro.isPresent()) {

@@ -69,7 +69,7 @@ public class EncomendaController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Encomenda> encomenda = service.getEncomendaById(id);
         if (!encomenda.isPresent()) {

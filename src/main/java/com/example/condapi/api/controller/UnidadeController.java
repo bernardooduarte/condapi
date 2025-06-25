@@ -69,7 +69,7 @@ public class UnidadeController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Unidade> unidade = service.getUnidadeById(id);
         if (!unidade.isPresent()) {

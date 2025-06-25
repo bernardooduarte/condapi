@@ -67,7 +67,7 @@ public class AreaComumController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AreaComum> areaComum = service.getAreaComumById(id);
         if (!areaComum.isPresent()) {

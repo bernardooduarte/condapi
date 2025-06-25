@@ -68,7 +68,7 @@ public class BlocoController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Bloco> bloco = service.getBlocoById(id);
         if (!bloco.isPresent()) {

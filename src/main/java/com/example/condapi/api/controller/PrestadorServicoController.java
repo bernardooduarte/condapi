@@ -70,7 +70,7 @@ public class PrestadorServicoController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<PrestadorServico> prestadorServico = service.getPrestadorServicoById(id);
         if (!prestadorServico.isPresent()) {

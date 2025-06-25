@@ -66,7 +66,7 @@ public class MoradorController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Morador> morador = service.getMoradorById(id);
         if (!morador.isPresent()) {

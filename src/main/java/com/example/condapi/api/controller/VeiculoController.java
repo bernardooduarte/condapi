@@ -71,7 +71,7 @@ public class VeiculoController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if (!veiculo.isPresent()) {
