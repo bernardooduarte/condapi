@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 public class PorteiroDTO {
 
     private Long id;
+    private String nome;
+    private String cpf;
 
     public static PorteiroDTO create(Porteiro porteiro){
         ModelMapper modelMapper = new ModelMapper();

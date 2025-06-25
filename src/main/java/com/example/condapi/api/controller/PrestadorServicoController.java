@@ -1,11 +1,8 @@
 package com.example.condapi.api.controller;
 
-
 import com.example.condapi.api.dto.PrestadorServicoDTO;
-import com.example.condapi.api.dto.RequisicaoObraDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.PrestadorServico;
-import com.example.condapi.model.entity.RequisicaoObra;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.PrestadorServicoService;
 import com.example.condapi.service.UnidadeService;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -49,7 +47,8 @@ public class PrestadorServicoController {
         try {
             PrestadorServico prestadorServico = converter(dto);
             prestadorServico = service.salvar(prestadorServico);
-            return new ResponseEntity(prestadorServico, HttpStatus.CREATED);
+            // CORRIGIDO: Retorna o DTO após salvar para evitar problemas de serialização
+            return new ResponseEntity(PrestadorServicoDTO.create(prestadorServico), HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -57,14 +56,20 @@ public class PrestadorServicoController {
 
     @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PrestadorServicoDTO dto) {
-        if (!service.getPrestadorServicoById(id).isPresent()) {
-            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
+        // Antes de atualizar, verificar se o prestador de serviço existe
+        Optional<PrestadorServico> existingPrestadorServico = service.getPrestadorServicoById(id);
+        if (!existingPrestadorServico.isPresent()) {
+            return new ResponseEntity("Prestador de Serviço não encontrado para atualização", HttpStatus.NOT_FOUND);
         }
         try {
             PrestadorServico prestadorServico = converter(dto);
             prestadorServico.setId(id);
-            service.salvar(prestadorServico);
-            return ResponseEntity.ok(prestadorServico);
+            // Preserva o ID do funcionário base se ele já existe e não foi passado no DTO
+            // ou se a lógica do converter não trata IDs de herança JOINED.
+            // Aqui estamos salvando a entidade já com o ID setado.
+            prestadorServico = service.salvar(prestadorServico);
+            // CORRIGIDO: Retorna o DTO do objeto salvo para evitar problemas de serialização de proxies LAZY
+            return ResponseEntity.ok(PrestadorServicoDTO.create(prestadorServico));
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -74,7 +79,7 @@ public class PrestadorServicoController {
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<PrestadorServico> prestadorServico = service.getPrestadorServicoById(id);
         if (!prestadorServico.isPresent()) {
-            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Prestador de Serviço não encontrada", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(prestadorServico.get());
@@ -86,14 +91,20 @@ public class PrestadorServicoController {
 
     public PrestadorServico converter(PrestadorServicoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
+        // Mapeia os campos comuns (nome, cpf) da hierarquia Funcionario para PrestadorServico
         PrestadorServico prestadorServico = modelMapper.map(dto, PrestadorServico.class);
+
+        // Associa a Unidade se um idUnidade for fornecido
         if (dto.getIdUnidade() != null) {
             Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
             if (!unidade.isPresent()) {
-                prestadorServico.setUnidade(null);
+                // Se a unidade não for encontrada, você pode definir como null ou lançar exceção
+                prestadorServico.setUnidade(null); // Conforme optional = true na entidade
             } else {
                 prestadorServico.setUnidade(unidade.get());
             }
+        } else {
+            prestadorServico.setUnidade(null); // Se o ID da unidade não for fornecido no DTO
         }
         return prestadorServico;
     }

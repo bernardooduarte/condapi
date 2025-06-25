@@ -20,10 +20,10 @@ public class Reserva {
     private String horaInicio;
     private String horaFim;
     private String data;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private PrestadorServico prestadorServico;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private Unidade unidade;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     private Morador morador;
 }
