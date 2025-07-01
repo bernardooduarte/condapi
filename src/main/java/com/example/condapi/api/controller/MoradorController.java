@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 public class MoradorController {
     private final MoradorService service;
-    private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -80,17 +79,9 @@ public class MoradorController {
         }
     }
 
-    public Morador converter(MoradorDTO dto) {
+    private Morador converter(MoradorDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Morador morador = modelMapper.map(dto, Morador.class);
-        if (dto.getIdUnidade() != null) {
-            Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
-            if (!unidade.isPresent()) {
-                morador.setUnidade(null);
-            } else {
-                morador.setUnidade(unidade.get());
-            }
-        }
         return morador;
     }
 }

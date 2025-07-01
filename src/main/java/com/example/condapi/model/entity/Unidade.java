@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,4 +24,7 @@ public class Unidade {
     @ManyToOne
     private Bloco bloco;
     private String quantidadeVagas;
+
+    @OneToMany(mappedBy = "unidade", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MoradorUnidade> associacoesMorador;
 }

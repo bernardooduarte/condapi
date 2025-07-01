@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,11 +20,11 @@ public class Morador {
 
     private String nome;
     private String cpf;
-    @ManyToOne
-    private Unidade unidade;
     private String celularPessoal;
     private String celularComercial;
     private String email;
-    private String statusProprietario;
+
+    @OneToMany(mappedBy = "morador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MoradorUnidade> associacoesUnidade;
 
 }

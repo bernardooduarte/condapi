@@ -16,19 +16,14 @@ import javax.persistence.*;
 public class MoradorDTO {
 
     private Long id;
-    private Long idUnidade;
     private String nome;
     private String cpf;
     private String celularPessoal;
     private String celularComercial;
     private String email;
-    private String statusProprietario;
-    private String numeroUnidade;
 
     public static MoradorDTO create(Morador morador){
         ModelMapper modelMapper = new ModelMapper();
-        MoradorDTO dto = modelMapper.map(morador, MoradorDTO.class);
-        dto.numeroUnidade = morador.getUnidade().getNumero();
-        return dto;
+        return modelMapper.map(morador, MoradorDTO.class);
     }
 }
