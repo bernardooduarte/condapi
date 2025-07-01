@@ -79,7 +79,7 @@ public class MoradorController {
         }
     }
 
-    private Morador converter(MoradorDTO dto) {
+    public Morador converter(MoradorDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Morador morador = modelMapper.map(dto, Morador.class);
         return morador;
