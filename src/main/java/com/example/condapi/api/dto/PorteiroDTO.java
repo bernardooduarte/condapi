@@ -15,6 +15,9 @@ public class PorteiroDTO {
     private Long id;
     private String nome;
     private String cpf;
+    private String empresa;
+    private String celularComercial;
+    private String email;
     private Long idCondominio;
     private String nomeCondominio;
 

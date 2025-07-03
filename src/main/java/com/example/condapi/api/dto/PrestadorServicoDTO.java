@@ -17,6 +17,11 @@ public class PrestadorServicoDTO {
     private Long id;
     private Long idUnidade;
     private String numeroUnidade;
+    private String nome;
+    private String cpf;
+    private String empresa;
+    private String celularComercial;
+    private String email;
 
     public static PrestadorServicoDTO create(PrestadorServico prestadorServico){
         ModelMapper modelMapper = new ModelMapper();
