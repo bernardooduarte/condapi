@@ -23,16 +23,15 @@ public class VeiculoDTO {
     private String modelo;
     private String cor;
     private String tipoVeiculo;
-    private String idUnidade;
-    private String idMorador;
+    private Long idMoradorUnidade;
     private String numeroUnidade;
     private String nomeMorador;
 
     public static VeiculoDTO create(Veiculo veiculo){
         ModelMapper modelMapper = new ModelMapper();
         VeiculoDTO dto = modelMapper.map(veiculo, VeiculoDTO.class);
-        dto.nomeMorador = veiculo.getMorador().getNome();
-        dto.numeroUnidade = veiculo.getUnidade().getNumero();
+        dto.numeroUnidade = veiculo.getMoradorUnidade().getUnidade().getNumero();
+        dto.nomeMorador = veiculo.getMoradorUnidade().getMorador().getNome();
         return dto;
     }
 }

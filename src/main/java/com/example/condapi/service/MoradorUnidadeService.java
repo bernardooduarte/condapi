@@ -1,7 +1,7 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.MoradorUnidade;
+import com.example.condapi.model.entity.*;
 import com.example.condapi.model.repository.MoradorUnidadeRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,14 @@ public class MoradorUnidadeService {
         return repository.findById(id);
     }
 
+    public List<MoradorUnidade> getMoradorUnidadeByUnidade(Optional<Unidade> unidade) {
+        return repository.findByUnidade(unidade);
+    }
+
+    public List<MoradorUnidade> getMoradorUnidadeByMorador(Optional<Morador> morador) {
+        return repository.findByMorador(morador);
+    }
+
     @Transactional
     public MoradorUnidade salvar(MoradorUnidade moradorUnidade) {
         validar(moradorUnidade);
@@ -46,16 +54,10 @@ public class MoradorUnidadeService {
         if (moradorUnidade.getUnidade() == null || moradorUnidade.getUnidade().getId() == null) {
             throw new RegraNegocioException("Unidade inválida.");
         }
-        if (moradorUnidade.getTipoDeVinculo() == null || moradorUnidade.getTipoDeVinculo().trim().equals("")) {
-            throw new RegraNegocioException("O tipo de vínculo é obrigatório.");
-        }
-
-        if (moradorUnidade.getDataInicioMoradia() == null) {
-            throw new RegraNegocioException("A data de início da moradia é obrigatória.");
-        }
     }
 
     public List<MoradorUnidade> getMoradorUnidades() {
         return repository.findAll();
     }
+
 }

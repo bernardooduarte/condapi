@@ -15,10 +15,13 @@ public class PorteiroDTO {
     private Long id;
     private String nome;
     private String cpf;
+    private Long idCondominio;
+    private String nomeCondominio;
 
     public static PorteiroDTO create(Porteiro porteiro){
         ModelMapper modelMapper = new ModelMapper();
         PorteiroDTO dto = modelMapper.map(porteiro, PorteiroDTO.class);
+        dto.nomeCondominio = porteiro.getCondominio().getNome();
         return dto;
     }
 }

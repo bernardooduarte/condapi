@@ -17,18 +17,9 @@ public class MoradorUnidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false) // Garante que a associação sempre terá um morador
-    @JoinColumn(name = "morador_id")
+    @ManyToOne
     private Morador morador;
-
-    @ManyToOne(optional = false) // Garante que a associação sempre terá uma unidade
-    @JoinColumn(name = "unidade_id")
+    @ManyToOne
     private Unidade unidade;
-
-    // Campos adicionais que descrevem a relação
-    // O campo 'statusProprietario' foi movido para cá, o que faz mais sentido
-    private String tipoDeVinculo; // Ex: "Proprietário", "Inquilino", "Dependente"
-    private String dataInicioMoradia;
-    private boolean isResponsavelFinanceiro;
 
 }

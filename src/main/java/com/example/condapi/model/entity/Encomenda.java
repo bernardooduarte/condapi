@@ -23,7 +23,5 @@ public class Encomenda {
     @ManyToOne
     private Porteiro porteiro;
     @ManyToOne
-    private Unidade unidade;
-    @ManyToOne
-    private Morador morador;
+    MoradorUnidade moradorUnidade;
 }

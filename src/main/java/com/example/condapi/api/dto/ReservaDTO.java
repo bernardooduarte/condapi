@@ -24,8 +24,7 @@ public class ReservaDTO {
     private String horaFim;
     private String data;
     private Long idPrestadorServico;
-    private Long idUnidade;
-    private Long idMorador;
+    private Long idMoradorUnidade;
     private String nomePrestadorServico;
     private String nomeMorador;
     private String numeroUnidade;
@@ -33,36 +32,9 @@ public class ReservaDTO {
     public static ReservaDTO create(Reserva reserva){
         ModelMapper modelMapper = new ModelMapper();
         ReservaDTO dto = modelMapper.map(reserva, ReservaDTO.class);
-        if (reserva.getUnidade() != null) {
-            dto.numeroUnidade = reserva.getUnidade().getNumero();
-        } else {
-            dto.numeroUnidade = null; // Ou "" ou algum valor padrão
-        }
-
-        if (reserva.getMorador() != null) {
-            dto.nomeMorador = reserva.getMorador().getNome();
-        } else {
-            dto.nomeMorador = null; // Ou "" ou algum valor padrão
-        }
-
-        if (reserva.getPrestadorServico() != null) {
-            dto.nomePrestadorServico = reserva.getPrestadorServico().getNome();
-        } else {
-            dto.nomePrestadorServico = null; // Ou "" ou algum valor padrão
-        }
-
-        // Se você também precisa dos IDs das entidades relacionadas, adicione aqui
-        if (reserva.getPrestadorServico() != null) {
-            dto.idPrestadorServico = reserva.getPrestadorServico().getId();
-        }
-
-        if (reserva.getUnidade() != null) {
-            dto.idUnidade = reserva.getUnidade().getId();
-        }
-
-        if (reserva.getMorador() != null) {
-            dto.idMorador = reserva.getMorador().getId();
-        }
+        dto.numeroUnidade = reserva.getMoradorUnidade().getUnidade().getNumero();
+        dto.nomeMorador = reserva.getMoradorUnidade().getMorador().getNome();
+        dto.nomePrestadorServico = reserva.getPrestadorServico().getNome();
         return dto;
     }
 }

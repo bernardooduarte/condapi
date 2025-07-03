@@ -24,8 +24,7 @@ public class EncomendaController {
 
 
     private final EncomendaService service;
-    private final MoradorService moradorService;
-    private final UnidadeService unidadeService;
+    private final MoradorUnidadeService moradorUnidadeService;
     private final PorteiroService porteiroService;
 
     @GetMapping()
@@ -86,20 +85,12 @@ public class EncomendaController {
     public Encomenda converter(EncomendaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Encomenda encomenda = modelMapper.map(dto, Encomenda.class);
-        if (dto.getIdMorador() != null) {
-            Optional<Morador> morador = moradorService.getMoradorById(dto.getIdMorador());
-            if (!morador.isPresent()) {
-                encomenda.setMorador(null);
+        if (dto.getIdMoradorUnidade() != null) {
+            Optional<MoradorUnidade> moradorUnidade = moradorUnidadeService.getMoradorUnidadeById(dto.getIdMoradorUnidade());
+            if (!moradorUnidade.isPresent()) {
+                encomenda.setMoradorUnidade(null);
             } else {
-                encomenda.setMorador(morador.get());
-            }
-        }
-        if (dto.getIdUnidade() != null) {
-            Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
-            if (!unidade.isPresent()) {
-                encomenda.setUnidade(null);
-            } else {
-                encomenda.setUnidade(unidade.get());
+                encomenda.setMoradorUnidade(moradorUnidade.get());
             }
         }
         if (dto.getIdPorteiro() != null) {

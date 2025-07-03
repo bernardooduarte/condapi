@@ -54,26 +54,21 @@ public class PrestadorServicoController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PrestadorServicoDTO dto) {
-        // Antes de atualizar, verificar se o prestador de serviço existe
-        Optional<PrestadorServico> existingPrestadorServico = service.getPrestadorServicoById(id);
-        if (!existingPrestadorServico.isPresent()) {
-            return new ResponseEntity("Prestador de Serviço não encontrado para atualização", HttpStatus.NOT_FOUND);
+        if (!service.getPrestadorServicoById(id).isPresent()) {
+            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             PrestadorServico prestadorServico = converter(dto);
             prestadorServico.setId(id);
-            // Preserva o ID do funcionário base se ele já existe e não foi passado no DTO
-            // ou se a lógica do converter não trata IDs de herança JOINED.
-            // Aqui estamos salvando a entidade já com o ID setado.
-            prestadorServico = service.salvar(prestadorServico);
-            // CORRIGIDO: Retorna o DTO do objeto salvo para evitar problemas de serialização de proxies LAZY
-            return ResponseEntity.ok(PrestadorServicoDTO.create(prestadorServico));
+            service.salvar(prestadorServico);
+            return ResponseEntity.ok(prestadorServico);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
@@ -91,20 +86,14 @@ public class PrestadorServicoController {
 
     public PrestadorServico converter(PrestadorServicoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
-        // Mapeia os campos comuns (nome, cpf) da hierarquia Funcionario para PrestadorServico
         PrestadorServico prestadorServico = modelMapper.map(dto, PrestadorServico.class);
-
-        // Associa a Unidade se um idUnidade for fornecido
         if (dto.getIdUnidade() != null) {
             Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
             if (!unidade.isPresent()) {
-                // Se a unidade não for encontrada, você pode definir como null ou lançar exceção
-                prestadorServico.setUnidade(null); // Conforme optional = true na entidade
+                prestadorServico.setUnidade(null);
             } else {
                 prestadorServico.setUnidade(unidade.get());
             }
-        } else {
-            prestadorServico.setUnidade(null); // Se o ID da unidade não for fornecido no DTO
         }
         return prestadorServico;
     }

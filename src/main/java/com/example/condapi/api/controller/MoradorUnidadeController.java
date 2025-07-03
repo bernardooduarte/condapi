@@ -4,6 +4,7 @@ import com.example.condapi.api.dto.MoradorUnidadeDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.MoradorUnidade;
+import com.example.condapi.model.entity.Porteiro;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.MoradorService;
 import com.example.condapi.service.MoradorUnidadeService;
@@ -83,24 +84,31 @@ public class MoradorUnidadeController {
         }
     }
 
-    private MoradorUnidade converter(MoradorUnidadeDTO dto) {
+    public MoradorUnidade converter(MoradorUnidadeDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         MoradorUnidade moradorUnidade = modelMapper.map(dto, MoradorUnidade.class);
 
         if (dto.getIdMorador() != null) {
-            Morador morador = moradorService.getMoradorById(dto.getIdMorador())
-                    .orElseThrow(() -> new RegraNegocioException("Morador não encontrado para o id informado."));
-            moradorUnidade.setMorador(morador);
+            Optional<Morador> morador = moradorService.getMoradorById(dto.getIdMorador());
+            if (!morador.isPresent()) {
+                moradorUnidade.setMorador(null);
+            } else {
+                moradorUnidade.setMorador(morador.get());
+            }
         }
 
         if (dto.getIdUnidade() != null) {
-            Unidade unidade = unidadeService.getUnidadeById(dto.getIdUnidade())
-                    .orElseThrow(() -> new RegraNegocioException("Unidade não encontrada para o id informado."));
-            moradorUnidade.setUnidade(unidade);
+            Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
+            if (!unidade.isPresent()) {
+                moradorUnidade.setUnidade(null);
+            } else {
+                moradorUnidade.setUnidade(unidade.get());
+            }
         }
 
         return moradorUnidade;
     }
+
 
 
 }

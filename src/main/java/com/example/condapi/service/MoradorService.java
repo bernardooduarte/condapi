@@ -2,6 +2,7 @@ package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Morador;
+import com.example.condapi.model.entity.MoradorUnidade;
 import com.example.condapi.model.repository.MoradorRepository;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +54,14 @@ public class MoradorService {
         if(morador.getEmail() == null || morador.getEmail().trim().equals("")){
             throw new RegraNegocioException("E-mail inválido");
         }
+        if(morador.getStatusProprietario() == null || morador.getStatusProprietario().trim().equals("")){
+            throw new RegraNegocioException("Status inválido");
+        }
     }
 
     public List<Morador> getMoradores() {
         return repository.findAll();
     }
+
+
 }

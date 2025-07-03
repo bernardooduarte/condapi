@@ -1,6 +1,8 @@
 package com.example.condapi.service;
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.AreaComum;
 import com.example.condapi.model.entity.Bloco;
+import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.model.repository.BlocoRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,10 @@ public class BlocoService {
         return repository.findById(id);
     }
 
+    public List<Bloco> getBlocoByCondominio(Optional<Condominio> condominio) {
+        return repository.findByCondominio(condominio);
+    }
+
     @Transactional
     public Bloco salvar(Bloco bloco){
         validar(bloco);
@@ -39,6 +45,9 @@ public class BlocoService {
     }
 
     public void validar(Bloco bloco ){
+        if (bloco.getCondominio() == null || bloco.getCondominio().getId() == null || bloco.getCondominio().getId() == 0) {
+            throw new RegraNegocioException("Bloco inválido");
+        }
         if(bloco.getLogradouro() == null || bloco.getLogradouro().trim().equals("")){
             throw new RegraNegocioException("Logradouro inválido");
         }

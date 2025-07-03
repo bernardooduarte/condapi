@@ -21,6 +21,7 @@ public class MoradorDTO {
     private String celularPessoal;
     private String celularComercial;
     private String email;
+    private String statusProprietario;
 
     public static MoradorDTO create(Morador morador){
         ModelMapper modelMapper = new ModelMapper();

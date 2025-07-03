@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = false)
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@PrimaryKeyJoinColumn(name="id", referencedColumnName="id")
 public class Porteiro extends Funcionario {
 
     @Id

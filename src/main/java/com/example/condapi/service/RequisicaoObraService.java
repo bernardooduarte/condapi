@@ -1,6 +1,8 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Encomenda;
+import com.example.condapi.model.entity.MoradorUnidade;
 import com.example.condapi.model.entity.RequisicaoObra;
 import com.example.condapi.model.repository.RequisicaoObraRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,10 @@ public class RequisicaoObraService {
         return repository.findById(id);
     }
 
+    public List<RequisicaoObra> getRequisicaoObraByMoradorUnidade(Optional<MoradorUnidade> moradorUnidade) {
+        return repository.findByMoradorUnidade(moradorUnidade);
+    }
+
     @Transactional
     public RequisicaoObra salvar(RequisicaoObra requisicaoObra){
         validar(requisicaoObra);
@@ -38,6 +44,9 @@ public class RequisicaoObraService {
         repository.delete(requisicaoObra);
     }
     public void validar(RequisicaoObra requisicaoObra){
+        if (requisicaoObra.getMoradorUnidade() == null || requisicaoObra.getMoradorUnidade().getId() == null || requisicaoObra.getMoradorUnidade().getId() == 0) {
+            throw new RegraNegocioException("Não encontrado inválido");
+        }
         if(requisicaoObra.getData() == null || requisicaoObra.getData().trim().equals("")){
             throw new RegraNegocioException("Data inválida");
         }

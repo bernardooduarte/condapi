@@ -1,6 +1,8 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.AreaComum;
+import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.model.entity.Funcionario;
 import com.example.condapi.model.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,10 @@ public class FuncionarioService {
         return repository.findById(id);
     }
 
+    public List<Funcionario> getFuncionarioByCondominio(Optional<Condominio> condominio) {
+        return repository.findByCondominio(condominio);
+    }
+
     @Transactional
     public Funcionario salvar(Funcionario funcionario){
         validar(funcionario);
@@ -39,6 +45,9 @@ public class FuncionarioService {
     }
 
     public void validar(Funcionario funcionario){
+        if (funcionario.getCondominio() == null || funcionario.getCondominio().getId() == null || funcionario.getCondominio().getId() == 0) {
+            throw new RegraNegocioException("Condomínioo inválido");
+        }
         if(funcionario.getNome() == null || funcionario.getNome().trim().equals("")){
             throw new RegraNegocioException("Nome inválido");
         }

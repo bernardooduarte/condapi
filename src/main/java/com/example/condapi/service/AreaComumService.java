@@ -2,6 +2,7 @@ package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.AreaComum;
+import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.model.repository.AreaComumRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,10 @@ public class AreaComumService {
         return repository.findById(id);
     }
 
+    public List<AreaComum> getAreacomumByCondominio(Optional<Condominio> condominio) {
+        return repository.findByCondominio(condominio);
+    }
+
     @Transactional
     public AreaComum salvar(AreaComum areaComum){
         validar(areaComum);
@@ -39,6 +44,9 @@ public class AreaComumService {
     }
 
     public void validar(AreaComum areaComum ){
+        if (areaComum.getCondominio() == null || areaComum.getCondominio().getId() == null || areaComum.getCondominio().getId() == 0) {
+            throw new RegraNegocioException("Condomínioo inválido");
+        }
         if(areaComum.getNome() == null || areaComum.getNome().trim().equals("")){
             throw new RegraNegocioException("Nome inválido");
         }

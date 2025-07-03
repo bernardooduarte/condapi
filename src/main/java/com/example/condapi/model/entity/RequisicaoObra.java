@@ -17,9 +17,7 @@ public class RequisicaoObra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String data;
-    @ManyToOne
-    private Morador morador;
-    @ManyToOne
-    private Unidade unidade;
     private String status;
+    @ManyToOne
+    MoradorUnidade moradorUnidade;
 }

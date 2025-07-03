@@ -23,8 +23,7 @@ public class Morador {
     private String celularPessoal;
     private String celularComercial;
     private String email;
+    private String statusProprietario;
 
-    @OneToMany(mappedBy = "morador", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MoradorUnidade> associacoesUnidade;
 
 }

@@ -4,10 +4,8 @@ package com.example.condapi.api.controller;
 import com.example.condapi.api.dto.RequisicaoObraDTO;
 import com.example.condapi.api.dto.ReservaDTO;
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.Morador;
-import com.example.condapi.model.entity.RequisicaoObra;
-import com.example.condapi.model.entity.Reserva;
-import com.example.condapi.model.entity.Unidade;
+import com.example.condapi.model.entity.*;
+import com.example.condapi.service.MoradorUnidadeService;
 import com.example.condapi.service.RequisicaoObraService;
 import com.example.condapi.service.MoradorService;
 import com.example.condapi.service.UnidadeService;
@@ -28,8 +26,7 @@ import java.util.stream.Collectors;
 
 public class RequisicaoObraController {
     private final RequisicaoObraService service;
-    private final MoradorService moradorService;
-    private final UnidadeService unidadeService;
+    private final MoradorUnidadeService moradorUnidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -90,20 +87,12 @@ public class RequisicaoObraController {
     public RequisicaoObra converter(RequisicaoObraDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         RequisicaoObra requisicaoObra = modelMapper.map(dto, RequisicaoObra.class);
-        if (dto.getIdMorador() != null) {
-            Optional<Morador> morador = moradorService.getMoradorById(dto.getIdMorador());
-            if (!morador.isPresent()) {
-                requisicaoObra.setMorador(null);
+        if (dto.getIdMoradorUnidade() != null) {
+            Optional<MoradorUnidade> moradorUnidade = moradorUnidadeService.getMoradorUnidadeById(dto.getIdMoradorUnidade());
+            if (!moradorUnidade.isPresent()) {
+                requisicaoObra.setMoradorUnidade(null);
             } else {
-                requisicaoObra.setMorador(morador.get());
-            }
-        }
-        if (dto.getIdUnidade() != null) {
-            Optional<Unidade> unidade = unidadeService.getUnidadeById(dto.getIdUnidade());
-            if (!unidade.isPresent()) {
-                requisicaoObra.setUnidade(null);
-            } else {
-                requisicaoObra.setUnidade(unidade.get());
+                requisicaoObra.setMoradorUnidade(moradorUnidade.get());
             }
         }
         return requisicaoObra;

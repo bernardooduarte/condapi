@@ -1,8 +1,7 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.Morador;
-import com.example.condapi.model.entity.Obra;
+import com.example.condapi.model.entity.*;
 import com.example.condapi.model.repository.ObraRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,14 @@ public class ObraService {
         return repository.findById(id);
     }
 
+    public List<Obra> getObraByPrestadorServico(Optional<PrestadorServico> prestadorServico) {
+        return repository.findByPrestadorServico(prestadorServico);
+    }
+
+    public List<Obra> getObraByRequisicaoObra(Optional<RequisicaoObra> requisicaoObra) {
+        return repository.findByRequisicaoObra(requisicaoObra);
+    }
+
     @Transactional
     public Obra salvar(Obra obra){
         validar(obra);
@@ -39,6 +46,12 @@ public class ObraService {
         repository.delete(obra);
     }
     public void validar(Obra obra){
+        if (obra.getRequisicaoObra() == null || obra.getRequisicaoObra().getId() == null || obra.getRequisicaoObra().getId() == 0) {
+            throw new RegraNegocioException("Requisação inválido");
+        }
+        if (obra.getPrestadorServico() == null || obra.getPrestadorServico().getId() == null || obra.getPrestadorServico().getId() == 0) {
+            throw new RegraNegocioException("Prestador Servico inválido");
+        }
         if(obra.getDescricao() == null || obra.getDescricao().trim().equals("")){
             throw new RegraNegocioException("Descrição inválida");
         }

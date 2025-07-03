@@ -14,42 +14,20 @@ import org.modelmapper.ModelMapper;
 public class EncomendaDTO {
 
     private Long id;
-    private Long idMorador;
-    private String nomeMorador;
     private String data;
     private String hora;
     private Long idPorteiro;
-    private Long idUnidade;
+    private Long idMoradorUnidade;
     private String nomePorteiro;
+    private String nomeMorador;
     private String numeroUnidade;
 
     public static EncomendaDTO create(Encomenda encomenda){
         ModelMapper modelMapper = new ModelMapper();
         EncomendaDTO dto = modelMapper.map(encomenda, EncomendaDTO.class);
-
-        if (encomenda.getPorteiro() != null) {
-            dto.nomePorteiro = encomenda.getPorteiro().getNome();
-            dto.idPorteiro = encomenda.getPorteiro().getId();
-        } else {
-            dto.nomePorteiro = null;
-            dto.idPorteiro = null;
-        }
-
-        if (encomenda.getMorador() != null) {
-            dto.nomeMorador = encomenda.getMorador().getNome();
-            dto.idMorador = encomenda.getMorador().getId();
-        } else {
-            dto.nomeMorador = null;
-            dto.idMorador = null;
-        }
-
-        if (encomenda.getUnidade() != null) {
-            dto.numeroUnidade = encomenda.getUnidade().getNumero();
-            dto.idUnidade = encomenda.getUnidade().getId();
-        } else {
-            dto.numeroUnidade = null;
-            dto.idUnidade = null;
-        }
+        dto.nomePorteiro = encomenda.getPorteiro().getNome();
+        dto.nomeMorador = encomenda.getMoradorUnidade().getMorador().getNome();
+        dto.numeroUnidade = encomenda.getMoradorUnidade().getUnidade().getNumero();
         return dto;
     }
 }

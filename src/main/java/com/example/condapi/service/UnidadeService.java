@@ -1,6 +1,9 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Bloco;
+import com.example.condapi.model.entity.Encomenda;
+import com.example.condapi.model.entity.MoradorUnidade;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.model.repository.UnidadeRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,10 @@ public class UnidadeService {
         return repository.findById(id);
     }
 
+    public List<Unidade> getUnidadeByBloco(Optional<Bloco> bloco) {
+        return repository.findByBloco(bloco);
+    }
+
     @Transactional
     public Unidade salvar(Unidade unidade){
         validar(unidade);
@@ -39,6 +46,9 @@ public class UnidadeService {
     }
 
     public void validar(Unidade unidade){
+        if (unidade.getBloco() == null || unidade.getBloco().getId() == null || unidade.getBloco().getId() == 0) {
+            throw new RegraNegocioException("Não encontrado inválido");
+        }
         if(unidade.getNumero() == null || unidade.getNumero().trim().equals("")){
             throw new RegraNegocioException("Número inválido");
         }

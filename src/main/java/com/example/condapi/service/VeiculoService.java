@@ -1,6 +1,8 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Encomenda;
+import com.example.condapi.model.entity.MoradorUnidade;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.model.entity.Veiculo;
 import com.example.condapi.model.repository.VeiculoRepository;
@@ -19,12 +21,16 @@ public class VeiculoService {
         this.repository = repository;
     }
 
-    public List<Veiculo> getVeiculo(){
+    public List<Veiculo> getVeiculos(){
         return repository.findAll();
     }
 
     public Optional<Veiculo> getVeiculoById(Long id){
         return repository.findById(id);
+    }
+
+    public List<Veiculo> getVeiculoByMoradorUnidade(Optional<MoradorUnidade> moradorUnidade) {
+        return repository.findByMoradorUnidade(moradorUnidade);
     }
 
     @Transactional
@@ -39,7 +45,14 @@ public class VeiculoService {
         repository.delete(veiculo);
     }
 
+    public List<Veiculo> getVeiculosByMoradorUnidade(Optional<MoradorUnidade> moradorUnidade) {
+        return repository.findByMoradorUnidade(moradorUnidade);
+    }
+
     public void validar(Veiculo veiculo){
+        if (veiculo.getMoradorUnidade() == null || veiculo.getMoradorUnidade().getId() == null || veiculo.getMoradorUnidade().getId() == 0) {
+            throw new RegraNegocioException("Não encontrado inválido");
+        }
         if(veiculo.getPlaca() == null || veiculo.getPlaca().trim().equals("")){
             throw new RegraNegocioException("Placa inválida");
         }
@@ -56,7 +69,7 @@ public class VeiculoService {
             throw new RegraNegocioException("Tipo de veículo inválido");
         }
     }
-    public List<Veiculo> getVeiculos() {
+    public List<Veiculo> getVeiculo() {
         return repository.findAll();
     }
 }

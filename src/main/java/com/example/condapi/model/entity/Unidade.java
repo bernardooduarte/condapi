@@ -25,6 +25,4 @@ public class Unidade {
     private Bloco bloco;
     private String quantidadeVagas;
 
-    @OneToMany(mappedBy = "unidade", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MoradorUnidade> associacoesMorador;
 }

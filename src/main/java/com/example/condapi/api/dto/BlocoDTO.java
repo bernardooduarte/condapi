@@ -20,20 +20,7 @@ public class BlocoDTO {
     public static BlocoDTO create(Bloco bloco){
         ModelMapper modelMapper = new ModelMapper();
         BlocoDTO dto = modelMapper.map(bloco, BlocoDTO.class);
-
-        // Adicionar verificação de nulidade para Condominio
-        if (bloco.getCondominio() != null) {
-            dto.nomeCondominio = bloco.getCondominio().getNome();
-        } else {
-            dto.nomeCondominio = null; // Ou "" ou algum valor padrão se Condominio for null
-        }
-
-        // Se você também precisa do ID do Condomínio no DTO
-        if (bloco.getCondominio() != null) {
-            dto.idCondominio = bloco.getCondominio().getId();
-        } else {
-            dto.idCondominio = null;
-        }
+        dto.nomeCondominio = bloco.getCondominio().getNome();
 
         return dto;
     }

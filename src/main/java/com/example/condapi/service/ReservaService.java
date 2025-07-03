@@ -1,6 +1,8 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.MoradorUnidade;
+import com.example.condapi.model.entity.PrestadorServico;
 import com.example.condapi.model.entity.Reserva;
 import com.example.condapi.model.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,14 @@ public class ReservaService {
         return repository.findById(id);
     }
 
+    public List<Reserva> getReservaByMoradorUnidade(Optional<MoradorUnidade> moradorUnidade) {
+        return repository.findByMoradorUnidade(moradorUnidade);
+    }
+
+    public List<Reserva> getReservaByPrestadorServico(Optional<PrestadorServico> prestadorServico) {
+        return repository.findByPrestadorServico(prestadorServico);
+    }
+
     @Transactional
     public Reserva salvar(Reserva reserva){
         validar(reserva);
@@ -39,6 +49,12 @@ public class ReservaService {
     }
 
     public void validar(Reserva reserva){
+        if (reserva.getMoradorUnidade() == null || reserva.getMoradorUnidade().getId() == null || reserva.getMoradorUnidade().getId() == 0) {
+            throw new RegraNegocioException("Não encontrado inválido");
+        }
+        if (reserva.getPrestadorServico() == null || reserva.getPrestadorServico().getId() == null || reserva.getPrestadorServico().getId() == 0) {
+            throw new RegraNegocioException("Não encontrado inválido");
+        }
         if(reserva.getHoraInicio() == null || reserva.getHoraInicio().trim().equals("")){
             throw new RegraNegocioException("Hora de início inválido");
         }

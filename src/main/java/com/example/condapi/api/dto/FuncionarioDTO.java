@@ -28,11 +28,7 @@ public class FuncionarioDTO {
     public static FuncionarioDTO create(Funcionario funcionario){
         ModelMapper modelMapper = new ModelMapper();
         FuncionarioDTO dto = modelMapper.map(funcionario, FuncionarioDTO.class);
-        if (funcionario.getCondominio() != null) {
-            dto.nomeCondominio = funcionario.getCondominio().getNome();
-        } else {
-            dto.nomeCondominio = null;
-        }
+        dto.nomeCondominio = funcionario.getCondominio().getNome();
         return dto;
     }
 }

@@ -27,18 +27,8 @@ public class ObraDTO {
     public static ObraDTO create(Obra obra){
         ModelMapper modelMapper = new ModelMapper();
         ObraDTO dto = modelMapper.map(obra, ObraDTO.class);
-
-        if (obra.getPrestadorServico() != null) {
-            dto.nomePrestadorServico = obra.getPrestadorServico().getNome();
-        } else {
-            dto.nomePrestadorServico = null;
-        }
-
-        if (obra.getRequisicaoObra() != null) {
-            dto.dataRequisicaoObra = obra.getRequisicaoObra().getData();
-        } else {
-            dto.dataRequisicaoObra = null;
-        }
+        dto.nomePrestadorServico = obra.getPrestadorServico().getNome();
+        dto.dataRequisicaoObra = obra.getRequisicaoObra().getData();
 
         return dto;
     }

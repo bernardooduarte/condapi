@@ -23,7 +23,5 @@ public class Veiculo {
     private String cor;
     private String tipoVeiculo;
     @ManyToOne
-    private Unidade unidade;
-    @ManyToOne
-    private Morador morador;
+    MoradorUnidade moradorUnidade;
 }
