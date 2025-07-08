@@ -50,10 +50,10 @@ public class ReservaService {
 
     public void validar(Reserva reserva){
         if (reserva.getMoradorUnidade() == null || reserva.getMoradorUnidade().getId() == null || reserva.getMoradorUnidade().getId() == 0) {
-            throw new RegraNegocioException("Não encontrado inválido");
+            throw new RegraNegocioException("Morador inválido");
         }
         if (reserva.getPrestadorServico() == null || reserva.getPrestadorServico().getId() == null || reserva.getPrestadorServico().getId() == 0) {
-            throw new RegraNegocioException("Não encontrado inválido");
+            throw new RegraNegocioException("Prestador de Serviço inválido");
         }
         if(reserva.getHoraInicio() == null || reserva.getHoraInicio().trim().equals("")){
             throw new RegraNegocioException("Hora de início inválido");

@@ -43,7 +43,6 @@ public class ReservaController {
         try {
             Reserva reserva = converter(dto);
             reserva = service.salvar(reserva);
-            // CORRIGIDO: Retorna o DTO após salvar para evitar problemas de serialização
             return new ResponseEntity(ReservaDTO.create(reserva), HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -61,7 +60,6 @@ public class ReservaController {
             Reserva reserva = converter(dto);
             reserva.setId(id); // Manter o ID da reserva existente
             service.salvar(reserva);
-            // CORRIGIDO: Retorna o DTO do objeto salvo para evitar problemas de serialização de proxies LAZY
             return ResponseEntity.ok(ReservaDTO.create(reserva));
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
