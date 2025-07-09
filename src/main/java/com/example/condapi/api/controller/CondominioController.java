@@ -5,6 +5,7 @@ import com.example.condapi.api.dto.CondominioDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.CondominioService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Condomínio")
 @CrossOrigin
 @RequestMapping("/api/v1/condominios")
 public class CondominioController {

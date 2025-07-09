@@ -9,6 +9,10 @@ import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.model.entity.Veiculo;
 import com.example.condapi.service.MoradorUnidadeService;
 import com.example.condapi.service.VeiculoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Veículos")
 @CrossOrigin
 @RequestMapping("/api/v1/veiculos")
 
@@ -36,6 +41,11 @@ public class VeiculoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um veículo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Veículo encontrado"),
+            @ApiResponse(code = 404, message = "Veículo não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if (!veiculo.isPresent()) {

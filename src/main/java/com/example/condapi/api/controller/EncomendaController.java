@@ -5,6 +5,10 @@ import com.example.condapi.api.dto.EncomendaDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Encomendas")
 @CrossOrigin
 @RequestMapping("/api/v1/encomendas")
 
@@ -34,6 +39,11 @@ public class EncomendaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma encomenda")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Encomenda encontrada"),
+            @ApiResponse(code = 404, message = "Encomenda não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Encomenda> encomenda = service.getEncomendaById(id);
         if (!encomenda.isPresent()) {

@@ -9,6 +9,10 @@ import com.example.condapi.service.MoradorUnidadeService;
 import com.example.condapi.service.RequisicaoObraService;
 import com.example.condapi.service.MoradorService;
 import com.example.condapi.service.UnidadeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Requisições de Obra")
 @CrossOrigin
 @RequestMapping("/api/v1/requisicoesObras")
 
@@ -35,6 +40,11 @@ public class RequisicaoObraController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma requisição de obra")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Requisição encontrada"),
+            @ApiResponse(code = 404, message = "Requisição não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<RequisicaoObra> requisicaoObra = service.getRequisicaoObraById(id);
         if (!requisicaoObra.isPresent()) {

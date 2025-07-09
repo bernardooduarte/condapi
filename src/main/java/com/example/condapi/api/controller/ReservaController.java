@@ -4,6 +4,10 @@ import com.example.condapi.api.dto.ReservaDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -16,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Reservas")
 @CrossOrigin
 @RequestMapping("/api/v1/reservas")
 public class ReservaController {
@@ -30,6 +35,11 @@ public class ReservaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma reserva")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Reserva encontrada"),
+            @ApiResponse(code = 404, message = "Reserva não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Reserva> reserva = service.getReservaById(id);
         if (!reserva.isPresent()) {

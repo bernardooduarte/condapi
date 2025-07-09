@@ -6,6 +6,10 @@ import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Porteiro;
 import com.example.condapi.model.entity.PrestadorServico;
 import com.example.condapi.service.PorteiroService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Porteiros")
 @CrossOrigin
 @RequestMapping("/api/v1/porteiros")
 
@@ -32,6 +37,11 @@ public class PorteiroController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um porteiro")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Porteiro encontrado"),
+            @ApiResponse(code = 404, message = "Porteiro não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Porteiro> porteiro = service.getPorteiroById(id);
         if (!porteiro.isPresent()) {

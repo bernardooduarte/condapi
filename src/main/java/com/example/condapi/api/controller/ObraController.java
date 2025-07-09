@@ -6,6 +6,10 @@ import com.example.condapi.api.dto.PorteiroDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Obras")
 @CrossOrigin
 @RequestMapping("/api/v1/obras")
 
@@ -35,6 +40,11 @@ public class ObraController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma obra")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Obra encontrada"),
+            @ApiResponse(code = 404, message = "Obra não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Obra> obra = service.getObraById(id);
         if (!obra.isPresent()) {

@@ -6,6 +6,10 @@ import com.example.condapi.api.dto.FuncionarioDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Funcionários")
 @CrossOrigin
 @RequestMapping("/api/v1/funcionarios")
 
@@ -32,6 +37,11 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um funcionário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário encontrado"),
+            @ApiResponse(code = 404, message = "Funcionário não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Funcionario> funcionario = service.getFuncionarioById(id);
         if (!funcionario.isPresent()) {

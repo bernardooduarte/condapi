@@ -6,6 +6,10 @@ import com.example.condapi.model.entity.AreaComum;
 import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.AreaComumService;
 import com.example.condapi.service.CondominioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Área Comum")
 @CrossOrigin
 @RequestMapping("/api/v1/areasComuns")
 
@@ -33,6 +38,11 @@ public class AreaComumController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma área comum")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Área comum encontrada"),
+            @ApiResponse(code = 404, message = "Área comum não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AreaComum> areaComum = service.getAreaComumById(id);
         if (!areaComum.isPresent()) {

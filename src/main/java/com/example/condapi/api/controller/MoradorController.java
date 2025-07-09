@@ -6,6 +6,10 @@ import com.example.condapi.model.entity.Morador;
 import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.MoradorService;
 import com.example.condapi.service.UnidadeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Api("API de Morador")
 @CrossOrigin
 @RequestMapping("/api/v1/moradores")
 
@@ -31,6 +36,11 @@ public class MoradorController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um morador")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Morador encontrado"),
+            @ApiResponse(code = 404, message = "Morador não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Morador> morador = service.getMoradorById(id);
         if (!morador.isPresent()) {

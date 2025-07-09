@@ -7,6 +7,9 @@ import com.example.condapi.model.entity.Bloco;
 import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.service.BlocoService;
 import com.example.condapi.service.CondominioService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -34,6 +37,11 @@ public class BlocoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um bloco")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Bloco encontrado"),
+            @ApiResponse(code = 404, message = "Bloco não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Bloco> bloco = service.getBlocoById(id);
         if (!bloco.isPresent()) {
