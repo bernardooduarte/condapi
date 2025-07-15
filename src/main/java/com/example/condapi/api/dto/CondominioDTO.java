@@ -21,7 +21,7 @@ public class CondominioDTO {
     private Integer quantidadePortarias;
     private Integer quantidadeUnidades;
     private Integer quantidadeBlocos;
-    private boolean exigeIdentificacao;
+    private String exigeIdentificacao;
     private String chaveAcesso;
     private String logradouro;
     private Integer numero;
