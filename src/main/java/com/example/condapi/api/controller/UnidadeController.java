@@ -48,11 +48,10 @@ public class UnidadeController {
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Unidade> unidade = service.getUnidadeById(id);
         if (!unidade.isPresent()) {
-            return new ResponseEntity("unidade não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Unidade não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(unidade.map(UnidadeDTO::create));
     }
-
     @PostMapping()
     public ResponseEntity post(@RequestBody UnidadeDTO dto) {
         try {
@@ -72,6 +71,8 @@ public class UnidadeController {
         try {
             Unidade unidade = converter(dto);
             unidade.setId(id);
+            Bloco bloco = blocoService.salvar(unidade.getBloco());
+            unidade.setBloco(bloco);
             service.salvar(unidade);
             return ResponseEntity.ok(unidade);
         } catch (RegraNegocioException e) {

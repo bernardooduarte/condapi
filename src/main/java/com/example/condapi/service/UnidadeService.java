@@ -1,10 +1,7 @@
 package com.example.condapi.service;
 
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.Bloco;
-import com.example.condapi.model.entity.Encomenda;
-import com.example.condapi.model.entity.MoradorUnidade;
-import com.example.condapi.model.entity.Unidade;
+import com.example.condapi.model.entity.*;
 import com.example.condapi.model.repository.UnidadeRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,16 +18,12 @@ public class UnidadeService {
         this.repository = repository;
     }
 
-    public List<Unidade> getUnidadeRepository(){
+    public List<Unidade> getUnidades(){
         return repository.findAll();
     }
 
     public Optional<Unidade> getUnidadeById(Long id){
         return repository.findById(id);
-    }
-
-    public List<Unidade> getUnidadeByBloco(Optional<Bloco> bloco) {
-        return repository.findByBloco(bloco);
     }
 
     @Transactional
@@ -47,7 +40,7 @@ public class UnidadeService {
 
     public void validar(Unidade unidade){
         if (unidade.getBloco() == null || unidade.getBloco().getId() == null || unidade.getBloco().getId() == 0) {
-            throw new RegraNegocioException("Não encontrado inválido");
+            throw new RegraNegocioException("Bloco inválido");
         }
         if(unidade.getNumero() == null || unidade.getNumero().trim().equals("")){
             throw new RegraNegocioException("Número inválido");
@@ -61,9 +54,5 @@ public class UnidadeService {
         if(unidade.getQuantidadeVagas() == null || unidade.getQuantidadeVagas().trim().equals("")){
             throw new RegraNegocioException("Quantidade de vagas inválida");
         }
-    }
-
-    public List<Unidade> getUnidades() {
-        return repository.findAll();
     }
 }

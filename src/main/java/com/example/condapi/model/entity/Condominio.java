@@ -21,7 +21,7 @@ public class Condominio {
     private Long id;
 
     private String nome;
-    private String tipocondominio;
+    private String tipoCondominio;
     private Integer quantidadePortarias;
     private Integer quantidadeUnidades;
     private Integer quantidadeBlocos;

@@ -41,7 +41,7 @@ public class CondominioService {
         if (condominio.getNome() == null || condominio.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
         }
-        if (condominio.getTipocondominio() == null || condominio.getTipocondominio().trim().equals("")) {
+        if (condominio.getTipoCondominio() == null || condominio.getTipoCondominio().trim().equals("")) {
             throw new RegraNegocioException("Tipo de condomínio inválido");
         }
         if (condominio.getQuantidadePortarias() == null || condominio.getQuantidadePortarias() == 0) {

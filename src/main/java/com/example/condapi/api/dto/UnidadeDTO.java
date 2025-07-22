@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 @AllArgsConstructor
 public class UnidadeDTO
 {
+    private Long id;
     private String numero;
     private String rua;
     private String petFriendly;
