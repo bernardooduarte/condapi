@@ -16,4 +16,7 @@ public class Porteiro extends Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private Condominio condominio;
 }

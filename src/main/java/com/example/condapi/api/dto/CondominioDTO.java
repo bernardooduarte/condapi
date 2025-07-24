@@ -1,7 +1,6 @@
 package com.example.condapi.api.dto;
 
 import com.example.condapi.model.entity.Condominio;
-import com.example.condapi.model.entity.Morador;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -46,6 +46,7 @@ public class VeiculoController {
             @ApiResponse(code = 200, message = "Veículo encontrado"),
             @ApiResponse(code = 404, message = "Veículo não encontrado")
     })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Veiculo> veiculo = service.getVeiculoById(id);
         if (!veiculo.isPresent()) {

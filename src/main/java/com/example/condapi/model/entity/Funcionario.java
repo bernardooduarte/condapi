@@ -10,10 +10,8 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-
-public class Funcionario {
+@MappedSuperclass
+public abstract class Funcionario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +22,4 @@ public class Funcionario {
     private String empresa;
     private String celularComercial;
     private String email;
-
-    @ManyToOne
-    private Condominio condominio;
 }

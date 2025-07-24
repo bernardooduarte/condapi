@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Api("API de Condomínio")
 @CrossOrigin
 @RequestMapping("/api/v1/condominios")
+
 public class CondominioController {
 
     private final CondominioService service;

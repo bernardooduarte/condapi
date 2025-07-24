@@ -12,13 +12,14 @@ import java.util.Optional;
 
 @Service
 public class CondominioService {
+
     public CondominioRepository repository;
 
     public CondominioService(CondominioRepository repository){
         this.repository = repository;
     }
 
-    public List<Condominio> getCondominioRepository(){
+    public List<Condominio> getCondominios() {
         return repository.findAll();
     }
 
@@ -41,7 +42,7 @@ public class CondominioService {
         if (condominio.getNome() == null || condominio.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
         }
-        if (condominio.getTipoCondominio() == null || condominio.getTipoCondominio().trim().equals("")) {
+        if(condominio.getTipoCondominio() == null || condominio.getTipoCondominio().trim().equals("")){
             throw new RegraNegocioException("Tipo de condomínio inválido");
         }
         if (condominio.getQuantidadePortarias() == null || condominio.getQuantidadePortarias() == 0) {
@@ -82,7 +83,5 @@ public class CondominioService {
         }
     }
 
-    public List<Condominio> getCondominios() {
-        return repository.findAll();
-    }
+
 }
