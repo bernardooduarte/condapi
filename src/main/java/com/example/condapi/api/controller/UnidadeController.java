@@ -1,6 +1,7 @@
 package com.example.condapi.api.controller;
 
 
+import com.example.condapi.api.dto.BlocoDTO;
 import com.example.condapi.api.dto.UnidadeDTO;
 import com.example.condapi.api.dto.VeiculoDTO;
 import com.example.condapi.exception.RegraNegocioException;
@@ -106,5 +107,15 @@ public class UnidadeController {
             }
         }
         return unidade;
+    }
+
+    @GetMapping("/{id}/blocos")
+    public ResponseEntity getBlocos(@PathVariable("id") Long id) {
+        Optional<Unidade> unidade = service.getUnidadeById(id);
+        if (!unidade.isPresent()) {
+            return new ResponseEntity("Unidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Bloco> blocos = unidade.get().getBlocos();
+        return ResponseEntity.ok(blocos.stream().map(BlocoDTO::create).collect(Collectors.toList()));
     }
 }

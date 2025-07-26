@@ -1,5 +1,6 @@
 package com.example.condapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,7 @@ public class Bloco {
     private Condominio condominio;
     private String logradouro;
     private String nome;
+
+    @ManyToOne
+    private Unidade unidade;
 }

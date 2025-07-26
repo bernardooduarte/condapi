@@ -5,8 +5,10 @@ import com.example.condapi.api.dto.BlocoDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Bloco;
 import com.example.condapi.model.entity.Condominio;
+import com.example.condapi.model.entity.Unidade;
 import com.example.condapi.service.BlocoService;
 import com.example.condapi.service.CondominioService;
+import com.example.condapi.service.UnidadeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -29,6 +31,7 @@ public class BlocoController {
 
     private final BlocoService service;
     private final CondominioService condominioService;
+    private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -100,6 +103,14 @@ public class BlocoController {
                 bloco.setCondominio(null);
             } else {
                 bloco.setCondominio(condominio.get());
+            }
+        }
+        if(dto.getIdUnidade() != null){
+            Optional<Unidade> unidade = unidadeService.getUnidadeById((dto.getIdUnidade()));
+            if(!unidade.isPresent()){
+                bloco.setUnidade(null);
+            } else {
+                bloco.setUnidade(unidade.get());
             }
         }
         return bloco;

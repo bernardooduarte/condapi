@@ -1,5 +1,6 @@
 package com.example.condapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,7 @@ public class Unidade {
     private Bloco bloco;
     private String quantidadeVagas;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "bloco")
+    private List<Bloco> blocos;
 }
