@@ -2,6 +2,7 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.BlocoDTO;
+import com.example.condapi.api.dto.UnidadeDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Bloco;
 import com.example.condapi.model.entity.Condominio;
@@ -31,7 +32,6 @@ public class BlocoController {
 
     private final BlocoService service;
     private final CondominioService condominioService;
-    private final UnidadeService unidadeService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -105,14 +105,16 @@ public class BlocoController {
                 bloco.setCondominio(condominio.get());
             }
         }
-        if(dto.getIdUnidade() != null){
-            Optional<Unidade> unidade = unidadeService.getUnidadeById((dto.getIdUnidade()));
-            if(!unidade.isPresent()){
-                bloco.setUnidade(null);
-            } else {
-                bloco.setUnidade(unidade.get());
-            }
-        }
         return bloco;
+    }
+
+    @GetMapping("/{id}/unidades")
+    public ResponseEntity getUnidades(@PathVariable("id") Long id) {
+        Optional<Bloco> bloco = service.getBlocoById(id);
+        if (!bloco.isPresent()) {
+            return new ResponseEntity("Bloco não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<Unidade> unidades = bloco.get().getUnidades();
+        return ResponseEntity.ok(unidades.stream().map(UnidadeDTO::create).collect(Collectors.toList()));
     }
 }

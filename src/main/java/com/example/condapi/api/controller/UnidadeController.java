@@ -53,6 +53,7 @@ public class UnidadeController {
         }
         return ResponseEntity.ok(unidade.map(UnidadeDTO::create));
     }
+
     @PostMapping()
     public ResponseEntity post(@RequestBody UnidadeDTO dto) {
         try {
@@ -72,8 +73,6 @@ public class UnidadeController {
         try {
             Unidade unidade = converter(dto);
             unidade.setId(id);
-            Bloco bloco = blocoService.salvar(unidade.getBloco());
-            unidade.setBloco(bloco);
             service.salvar(unidade);
             return ResponseEntity.ok(unidade);
         } catch (RegraNegocioException e) {
@@ -107,15 +106,5 @@ public class UnidadeController {
             }
         }
         return unidade;
-    }
-
-    @GetMapping("/{id}/blocos")
-    public ResponseEntity getBlocos(@PathVariable("id") Long id) {
-        Optional<Unidade> unidade = service.getUnidadeById(id);
-        if (!unidade.isPresent()) {
-            return new ResponseEntity("Unidade não encontrada", HttpStatus.NOT_FOUND);
-        }
-        List<Bloco> blocos = unidade.get().getBlocos();
-        return ResponseEntity.ok(blocos.stream().map(BlocoDTO::create).collect(Collectors.toList()));
     }
 }

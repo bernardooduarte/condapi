@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,6 +23,7 @@ public class Bloco {
     private String logradouro;
     private String nome;
 
-    @ManyToOne
-    private Unidade unidade;
+    @JsonIgnore
+    @OneToMany(mappedBy = "bloco")
+    private List<Unidade> unidades;
 }

@@ -16,7 +16,6 @@ public class BlocoDTO {
     private String logradouro;
     private String nome;
     private String nomeCondominio;
-    private Long idUnidade;
 
     public static BlocoDTO create(Bloco bloco){
         ModelMapper modelMapper = new ModelMapper();

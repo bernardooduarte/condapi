@@ -54,5 +54,8 @@ public class UnidadeService {
         if(unidade.getQuantidadeVagas() == null || unidade.getQuantidadeVagas().trim().equals("")){
             throw new RegraNegocioException("Quantidade de vagas inválida");
         }
+        if(unidade.getBloco() == null || unidade.getBloco().getId() == null || unidade.getBloco().getId() == 0){
+            throw new RegraNegocioException(("Bloco inválido"));
+        }
     }
 }
