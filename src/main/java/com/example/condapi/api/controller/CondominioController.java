@@ -2,8 +2,10 @@ package com.example.condapi.api.controller;
 
 
 import com.example.condapi.api.dto.CondominioDTO;
+import com.example.condapi.api.dto.PorteiroDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Condominio;
+import com.example.condapi.model.entity.Porteiro;
 import com.example.condapi.service.CondominioService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -86,5 +88,15 @@ public class CondominioController {
         ModelMapper modelMapper = new ModelMapper();
         Condominio condominio = modelMapper.map(dto, Condominio.class);
         return condominio;
+    }
+
+    @GetMapping("/{id}/condominios")
+    public ResponseEntity getCondominios(@PathVariable("id") Long id) {
+        Optional<Condominio> condominio = service.getCondominioById(id);
+        if (!condominio.isPresent()) {
+            return new ResponseEntity("Condomínio não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<Porteiro> porteiros = condominio.get().getPorteiros();
+        return ResponseEntity.ok(porteiros.stream().map(PorteiroDTO::create).collect(Collectors.toList()));
     }
 }

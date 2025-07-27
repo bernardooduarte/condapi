@@ -65,6 +65,9 @@ public class PorteiroService {
         if(porteiro.getEmail() == null || porteiro.getEmail().trim().equals("")){
             throw new RegraNegocioException("Email inválido");
         }
+        if(porteiro.getCondominio() == null || porteiro.getCondominio().getId() == null || porteiro.getCondominio().getId() == 0){
+            throw new RegraNegocioException("Condomínio inválido.");
+        }
     }
 
     public List<Porteiro> getPorteiros() {

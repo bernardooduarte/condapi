@@ -3,8 +3,10 @@ package com.example.condapi.api.controller;
 
 import com.example.condapi.api.dto.*;
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.model.entity.Condominio;
 import com.example.condapi.model.entity.Porteiro;
 import com.example.condapi.model.entity.PrestadorServico;
+import com.example.condapi.service.CondominioService;
 import com.example.condapi.service.PorteiroService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 
 public class PorteiroController {
     private final PorteiroService service;
+    private final CondominioService condominioService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -93,6 +96,14 @@ public class PorteiroController {
     public Porteiro converter(PorteiroDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Porteiro porteiro = modelMapper.map(dto, Porteiro.class);
+        if (dto.getIdCondominio() != null) {
+            Optional<Condominio> condominio = condominioService.getCondominioById(dto.getIdCondominio());
+            if (!condominio.isPresent()) {
+                porteiro.setCondominio(null);
+            } else {
+                porteiro.setCondominio(condominio.get());
+            }
+        }
         return porteiro;
     }
 }
