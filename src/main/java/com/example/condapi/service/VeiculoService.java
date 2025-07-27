@@ -68,6 +68,9 @@ public class VeiculoService {
         if(veiculo.getTipoVeiculo() == null || veiculo.getTipoVeiculo().trim().equals("")) {
             throw new RegraNegocioException("Tipo de veículo inválido");
         }
+        if(veiculo.getMoradorUnidade() == null || veiculo.getMoradorUnidade().getId() == null || veiculo.getMoradorUnidade().getId() == 0){
+            throw new RegraNegocioException("Associação Morador/Unidade inválida");
+        }
     }
     public List<Veiculo> getVeiculo() {
         return repository.findAll();

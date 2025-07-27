@@ -1,11 +1,9 @@
 package com.example.condapi.api.controller;
 
 import com.example.condapi.api.dto.MoradorUnidadeDTO;
+import com.example.condapi.api.dto.VeiculoDTO;
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.Morador;
-import com.example.condapi.model.entity.MoradorUnidade;
-import com.example.condapi.model.entity.Porteiro;
-import com.example.condapi.model.entity.Unidade;
+import com.example.condapi.model.entity.*;
 import com.example.condapi.service.MoradorService;
 import com.example.condapi.service.MoradorUnidadeService;
 import com.example.condapi.service.UnidadeService;
@@ -119,6 +117,14 @@ public class MoradorUnidadeController {
         return moradorUnidade;
     }
 
-
+    @GetMapping("/{id}/veiculos")
+    public ResponseEntity getVeiculos(@PathVariable("id") Long id) {
+        Optional<MoradorUnidade> moradorUnidade = service.getMoradorUnidadeById(id);
+        if (!moradorUnidade.isPresent()) {
+            return new ResponseEntity("Associação Morador/Unidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Veiculo> veiculos = moradorUnidade.get().getVeiculos();
+        return ResponseEntity.ok(veiculos.stream().map(VeiculoDTO::create).collect(Collectors.toList()));
+    }
 
 }

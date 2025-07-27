@@ -22,6 +22,7 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private String tipoVeiculo;
+
     @ManyToOne
     MoradorUnidade moradorUnidade;
 }
