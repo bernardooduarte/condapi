@@ -4,9 +4,11 @@ package com.example.condapi.api.controller;
 import com.example.condapi.api.dto.*;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.Condominio;
+import com.example.condapi.model.entity.Encomenda;
 import com.example.condapi.model.entity.Porteiro;
 import com.example.condapi.model.entity.PrestadorServico;
 import com.example.condapi.service.CondominioService;
+import com.example.condapi.service.EncomendaService;
 import com.example.condapi.service.PorteiroService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -105,5 +107,15 @@ public class PorteiroController {
             }
         }
         return porteiro;
+    }
+
+    @GetMapping("/{id}/encomendas")
+    public ResponseEntity getEncomendas(@PathVariable("id") Long id) {
+        Optional<Porteiro> porteiro = service.getPorteiroById(id);
+        if (!porteiro.isPresent()) {
+            return new ResponseEntity("Porteiro não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<Encomenda> encomendas = porteiro.get().getEncomendas();
+        return ResponseEntity.ok(encomendas.stream().map(EncomendaDTO::create).collect(Collectors.toList()));
     }
 }

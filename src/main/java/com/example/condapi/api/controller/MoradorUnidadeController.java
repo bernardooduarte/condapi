@@ -1,7 +1,6 @@
 package com.example.condapi.api.controller;
 
-import com.example.condapi.api.dto.MoradorUnidadeDTO;
-import com.example.condapi.api.dto.VeiculoDTO;
+import com.example.condapi.api.dto.*;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
 import com.example.condapi.service.MoradorService;
@@ -126,5 +125,32 @@ public class MoradorUnidadeController {
         List<Veiculo> veiculos = moradorUnidade.get().getVeiculos();
         return ResponseEntity.ok(veiculos.stream().map(VeiculoDTO::create).collect(Collectors.toList()));
     }
+    @GetMapping("/{id}/encomendas")
+    public ResponseEntity getEncomendas(@PathVariable("id") Long id) {
+        Optional<MoradorUnidade> moradorUnidade = service.getMoradorUnidadeById(id);
+        if (!moradorUnidade.isPresent()) {
+            return new ResponseEntity("Associação Morador/Unidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Encomenda> encomendas = moradorUnidade.get().getEncomendas();
+        return ResponseEntity.ok(encomendas.stream().map(EncomendaDTO::create).collect(Collectors.toList()));
+    }
+    @GetMapping("/{id}/reservas")
+    public ResponseEntity getReservas(@PathVariable("id") Long id) {
+        Optional<MoradorUnidade> moradorUnidade = service.getMoradorUnidadeById(id);
+        if (!moradorUnidade.isPresent()) {
+            return new ResponseEntity("Associação Morador/Unidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Reserva> reservas = moradorUnidade.get().getReservas();
+        return ResponseEntity.ok(reservas.stream().map(ReservaDTO::create).collect(Collectors.toList()));
+    }
 
+    @GetMapping("/{id}/requisicoesObras")
+    public ResponseEntity getRequisicoesObras(@PathVariable("id") Long id) {
+        Optional<MoradorUnidade> moradorUnidade = service.getMoradorUnidadeById(id);
+        if (!moradorUnidade.isPresent()) {
+            return new ResponseEntity("Associação Morador/Unidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<RequisicaoObra> requisicoesObras = moradorUnidade.get().getRequisicoesObras();
+        return ResponseEntity.ok(requisicoesObras.stream().map(RequisicaoObraDTO::create).collect(Collectors.toList()));
+    }
 }

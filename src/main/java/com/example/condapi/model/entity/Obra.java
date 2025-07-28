@@ -20,8 +20,10 @@ public class Obra {
     private String descricao;
     private String dataInicio;
     private String dataFim;
+
     @ManyToOne
     private PrestadorServico prestadorServico;
+
     @ManyToOne
     private RequisicaoObra requisicaoObra;
 }

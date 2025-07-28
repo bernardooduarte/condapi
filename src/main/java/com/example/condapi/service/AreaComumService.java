@@ -45,7 +45,7 @@ public class AreaComumService {
 
     public void validar(AreaComum areaComum ){
         if (areaComum.getCondominio() == null || areaComum.getCondominio().getId() == null || areaComum.getCondominio().getId() == 0) {
-            throw new RegraNegocioException("Condomínioo inválido");
+            throw new RegraNegocioException("Condomínio inválido");
         }
         if(areaComum.getNome() == null || areaComum.getNome().trim().equals("")){
             throw new RegraNegocioException("Nome inválido");

@@ -20,8 +20,10 @@ public class Reserva {
     private String horaInicio;
     private String horaFim;
     private String data;
+
     @ManyToOne
     private PrestadorServico prestadorServico;
+
     @ManyToOne
     MoradorUnidade moradorUnidade;
 }

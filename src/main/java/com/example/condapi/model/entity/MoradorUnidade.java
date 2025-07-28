@@ -27,4 +27,16 @@ public class MoradorUnidade {
     @JsonIgnore
     @OneToMany(mappedBy = "moradorUnidade")
     private List<Veiculo> veiculos;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "moradorUnidade")
+    private List<Encomenda> encomendas;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "moradorUnidade")
+    private List<Reserva> reservas;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "moradorUnidade")
+    private List<RequisicaoObra> requisicoesObras;
 }

@@ -22,11 +22,14 @@ public class PrestadorServicoDTO {
     private String empresa;
     private String celularComercial;
     private String email;
+    private Long idCondominio;
+    private String nomeCondominio;
 
     public static PrestadorServicoDTO create(PrestadorServico prestadorServico){
         ModelMapper modelMapper = new ModelMapper();
         PrestadorServicoDTO dto = modelMapper.map(prestadorServico, PrestadorServicoDTO.class);
         dto.numeroUnidade = prestadorServico.getUnidade().getNumero();
+        dto.nomeCondominio = prestadorServico.getCondominio().getNome();
         return dto;
     }
 }

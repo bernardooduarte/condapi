@@ -49,7 +49,7 @@ public class EncomendaService {
 
     public void validar(Encomenda encomenda ){
         if (encomenda.getMoradorUnidade() == null || encomenda.getMoradorUnidade().getId() == null || encomenda.getMoradorUnidade().getId() == 0) {
-            throw new RegraNegocioException("Não encontrado associação inválido");
+            throw new RegraNegocioException("Associação Morador/Unidade inválida");
         }
         if (encomenda.getPorteiro() == null || encomenda.getPorteiro().getId() == null || encomenda.getPorteiro().getId() == 0) {
             throw new RegraNegocioException("Porteiro inválido");

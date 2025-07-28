@@ -25,4 +25,8 @@ public class Unidade {
     @ManyToOne
     private Bloco bloco;
     private String quantidadeVagas;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "unidade")
+    private List<PrestadorServico> prestadoresServicos;
 }

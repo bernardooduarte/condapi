@@ -1,6 +1,7 @@
 package com.example.condapi.api.controller;
 
 
+import com.example.condapi.api.dto.ObraDTO;
 import com.example.condapi.api.dto.RequisicaoObraDTO;
 import com.example.condapi.api.dto.ReservaDTO;
 import com.example.condapi.exception.RegraNegocioException;
@@ -106,5 +107,14 @@ public class RequisicaoObraController {
             }
         }
         return requisicaoObra;
+    }
+    @GetMapping("/{id}/obras")
+    public ResponseEntity getObras(@PathVariable("id") Long id) {
+        Optional<RequisicaoObra> requisicaoObra = service.getRequisicaoObraById(id);
+        if (!requisicaoObra.isPresent()) {
+            return new ResponseEntity("Requisição de Obra não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<Obra> obras = requisicaoObra.get().getObras();
+        return ResponseEntity.ok(obras.stream().map(ObraDTO::create).collect(Collectors.toList()));
     }
 }

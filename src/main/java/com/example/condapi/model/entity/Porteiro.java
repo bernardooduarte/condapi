@@ -1,11 +1,13 @@
 package com.example.condapi.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,4 +21,8 @@ public class Porteiro extends Funcionario {
 
     @ManyToOne
     private Condominio condominio;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "porteiro")
+    private List<Encomenda> encomendas;
 }

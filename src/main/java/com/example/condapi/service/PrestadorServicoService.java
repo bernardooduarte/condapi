@@ -63,6 +63,12 @@ public class PrestadorServicoService {
         if(prestadorServico.getEmail() == null || prestadorServico.getEmail().trim().equals("")){
             throw new RegraNegocioException("Email inválido");
         }
+        if(prestadorServico.getUnidade() == null || prestadorServico.getUnidade().getId() == null || prestadorServico.getUnidade().getId() == 0){
+            throw new RegraNegocioException("Unidade inválida");
+        }
+        if(prestadorServico.getCondominio() == null || prestadorServico.getCondominio().getId() == null || prestadorServico.getCondominio().getId() == 0){
+            throw new RegraNegocioException("Condomínio inválido");
+        }
     }
 
     public List<PrestadorServico> getPrestadoresServico() {

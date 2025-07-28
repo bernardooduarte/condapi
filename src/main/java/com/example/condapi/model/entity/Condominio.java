@@ -37,4 +37,12 @@ public class Condominio {
     @JsonIgnore
     @OneToMany(mappedBy = "condominio")
     private List<Porteiro> porteiros;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "condominio")
+    private List<PrestadorServico> prestadoresServicos;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "condominio")
+    private List<AreaComum> areasComuns;
 }

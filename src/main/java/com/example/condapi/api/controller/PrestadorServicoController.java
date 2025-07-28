@@ -1,9 +1,9 @@
 package com.example.condapi.api.controller;
 
-import com.example.condapi.api.dto.PrestadorServicoDTO;
+import com.example.condapi.api.dto.*;
 import com.example.condapi.exception.RegraNegocioException;
-import com.example.condapi.model.entity.PrestadorServico;
-import com.example.condapi.model.entity.Unidade;
+import com.example.condapi.model.entity.*;
+import com.example.condapi.service.CondominioService;
 import com.example.condapi.service.PrestadorServicoService;
 import com.example.condapi.service.UnidadeService;
 import io.swagger.annotations.Api;
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 public class PrestadorServicoController {
 
     private final PrestadorServicoService service;
+    private final CondominioService condominioService;
     private final UnidadeService unidadeService;
 
     @GetMapping()
@@ -104,7 +105,33 @@ public class PrestadorServicoController {
             } else {
                 prestadorServico.setUnidade(unidade.get());
             }
+            Optional<Condominio> condominio = condominioService.getCondominioById(dto.getIdCondominio());
+            if (!condominio.isPresent()) {
+                prestadorServico.setCondominio(null);
+            } else {
+                prestadorServico.setCondominio(condominio.get());
+            }
         }
         return prestadorServico;
+    }
+
+    @GetMapping("/{id}/reservas")
+    public ResponseEntity getReservas(@PathVariable("id") Long id) {
+        Optional<PrestadorServico> prestadorServico = service.getPrestadorServicoById(id);
+        if (!prestadorServico.isPresent()) {
+            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<Reserva> reservas = prestadorServico.get().getReservas();
+        return ResponseEntity.ok(reservas.stream().map(ReservaDTO::create).collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}/obras")
+    public ResponseEntity getObras(@PathVariable("id") Long id) {
+        Optional<PrestadorServico> prestadorServico = service.getPrestadorServicoById(id);
+        if (!prestadorServico.isPresent()) {
+            return new ResponseEntity("Prestador de Serviço não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<Obra> obras = prestadorServico.get().getObras();
+        return ResponseEntity.ok(obras.stream().map(ObraDTO::create).collect(Collectors.toList()));
     }
 }

@@ -28,6 +28,10 @@ public class ReservaService {
         return repository.findById(id);
     }
 
+    public List<Reserva> getReservas() {
+        return repository.findAll();
+    }
+
     public List<Reserva> getReservaByMoradorUnidade(Optional<MoradorUnidade> moradorUnidade) {
         return repository.findByMoradorUnidade(moradorUnidade);
     }
@@ -50,7 +54,7 @@ public class ReservaService {
 
     public void validar(Reserva reserva){
         if (reserva.getMoradorUnidade() == null || reserva.getMoradorUnidade().getId() == null || reserva.getMoradorUnidade().getId() == 0) {
-            throw new RegraNegocioException("Morador inválido");
+            throw new RegraNegocioException("Associação Morador/Unidade inválida");
         }
         if (reserva.getPrestadorServico() == null || reserva.getPrestadorServico().getId() == null || reserva.getPrestadorServico().getId() == 0) {
             throw new RegraNegocioException("Prestador de Serviço inválido");
@@ -64,9 +68,5 @@ public class ReservaService {
         if(reserva.getData() == null || reserva.getData().trim().equals("")){
             throw new RegraNegocioException("Data inválida");
         }
-    }
-
-    public List<Reserva> getReservas() {
-        return repository.findAll();
     }
 }

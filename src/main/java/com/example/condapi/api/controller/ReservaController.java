@@ -1,5 +1,6 @@
 package com.example.condapi.api.controller;
 
+import com.example.condapi.api.dto.EncomendaDTO;
 import com.example.condapi.api.dto.ReservaDTO;
 import com.example.condapi.exception.RegraNegocioException;
 import com.example.condapi.model.entity.*;
@@ -110,5 +111,4 @@ public class ReservaController {
         }
         return reserva;
     }
-
 }
