@@ -1,16 +1,23 @@
 package com.example.condapi.api.controller;
 
 
+import com.example.condapi.api.dto.CredenciaisDTO;
+import com.example.condapi.api.dto.TokenDTO;
 import com.example.condapi.api.dto.UsuarioDTO;
 import com.example.condapi.exception.RegraNegocioException;
+import com.example.condapi.exception.SenhaInvalidaException;
 import com.example.condapi.model.entity.Usuario;
+import com.example.condapi.security.JwtService;
 import com.example.condapi.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +30,7 @@ import java.util.stream.Collectors;
 public class UsuarioController {
     private final UsuarioService service;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -38,7 +46,6 @@ public class UsuarioController {
         }
         return ResponseEntity.ok(usuario.map(UsuarioDTO::create));
     }
-
 
     @PostMapping()
     public ResponseEntity post(@RequestBody UsuarioDTO dto) {
@@ -57,6 +64,20 @@ public class UsuarioController {
             return new ResponseEntity(usuario, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/auth")
+    public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
+        try{
+            Usuario usuario = Usuario.builder()
+                    .login(credenciais.getLogin())
+                    .senha(credenciais.getSenha()).build();
+            UserDetails usuarioAutenticado = service.autenticar(usuario);
+            String token = jwtService.gerarToken(usuario);
+            return new TokenDTO(usuario.getLogin(), token);
+        } catch (UsernameNotFoundException | SenhaInvalidaException e ){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
